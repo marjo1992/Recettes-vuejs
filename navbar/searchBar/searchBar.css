@@ -1,0 +1,65 @@
+#searchBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 1.25vw;
+    font-family: inherit;
+}
+
+#searchBar ::selection {
+    background-color: var(--colorGreenLight);
+}
+
+#searchBar .autocomplete {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+	width: 13vw;
+}
+
+#searchBar .autocomplete-input {
+	width: 100%;
+    padding: 0 0.5vw;
+    border: none;
+    border-radius: 20px;
+    background-color: white;
+	background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+");
+	background-repeat: no-repeat;
+    background-position: 95%;
+    font-size: 1.25vw;
+    font-family: inherit;
+    opacity: 0.9;
+    background-size: contain;
+}
+
+#searchBar .autocomplete-input:focus {
+	outline: none;
+    opacity: 1;
+}
+
+.autocomplete-result-list {
+	margin: 2px 0 0 0;
+	padding: 0;
+	overflow-y: auto;
+    background: white;
+    border-radius: 10px;
+    color: seagreen;
+}
+
+.autocomplete-result {
+    padding: 0 0.25vw;
+}
+
+.autocomplete-result:hover {
+    background-color: rgb(215, 233, 215);
+}
+
+.autocomplete-result[aria-selected=true] {
+    color: white;
+    background-color: darkseagreen;
+}
+.autocomplete-result[aria-selected=true]:hover {
+    background-color: rgb(115, 151, 115);
+}

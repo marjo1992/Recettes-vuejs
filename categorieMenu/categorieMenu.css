@@ -1,0 +1,21 @@
+  
+.categorieMenu {
+    background-color: var(--colorBlueLight);
+    box-shadow: var(--vignetteBoxShadowSize) var(--colorBlueLight);
+    color: var(--colorBlueDark);
+    margin: 0.7vh 0vw;
+    font-size: 1.3vw;
+    flex-grow: 1;
+    width: auto;
+    opacity: 0.6;
+    transition: opacity 0.5s;
+}
+
+.categorieMenu.selected { 
+    border: 3px solid #99b4d8;
+    opacity: 1;
+}
+
+.categorieMenu:hover {
+    opacity: 1;
+}

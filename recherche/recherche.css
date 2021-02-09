@@ -1,0 +1,33 @@
+#recherche {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: calc(97vh - var(--navbarHeight));
+    overflow: auto;
+    margin: 1vh 0;
+    overflow-y: auto;
+}
+
+#recherche #central {
+    flex-direction: column;
+}
+
+#recherche h1 {
+	display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 1vh 0 0 3vw;
+    color:var(--colorGreenDark);
+}
+
+.resultatDomaine {
+	display: flex;
+    flex-direction: column;
+}
+
+.recettesDuDomaine {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+    align-content: flex-start;
+}

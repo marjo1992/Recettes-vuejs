@@ -1,0 +1,96 @@
+:root {
+    --contentAdminHeight: calc(92vh - var(--navbarHeight));
+}
+
+#admin {
+    display:flex;
+    flex-direction: row;
+    height: var(--contentAdminHeight);
+    margin: 4vh 15vw;
+    border-radius: 20px;
+    background-color: var(--colorOrangeLight);
+    overflow: hidden;
+}
+
+#admin #formulaire {
+    display:flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 0;
+    overflow-y: auto;
+    padding: 1vh 1vw;
+}
+
+#admin #affichage {
+    flex-grow: 1;
+    flex-basis: 0;
+    background-color: darkslategray;
+    color: var(--colorTitle);
+    padding: 2vh 1vw;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#admin #boutonGenerer {
+    background-color: teal;
+    padding: 0.25vh 1vw;
+    border-radius: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    cursor: pointer;
+}
+
+#admin #formulaire>div {
+    display:flex;
+    flex-direction: row;
+    margin-top: 0.5vh;
+}
+#admin #formulaire .champ {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin-left: 0.5vw;
+}
+#admin #formulaire .nomChamp {
+    display:flex;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-basis: 0;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 0.5vw;
+}
+
+
+#admin pre {
+    display: flex;
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: 0.75px;
+    overflow-y: auto;
+}
+
+#admin input, #admin textarea, #admin select {
+    display: flex;
+    width: 13vw;
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: 0.75px;
+    border: 1px solid #e8e8e8;
+	border-radius: 5px;
+    background: #fff;
+    padding: 0 0.25vw;
+}
+#admin select {
+    width: 13.5vw;
+}
+
+#admin input:focus, #admin textarea:focus, #admin select:focus {
+	outline: none;
+}
+
+#admin .champ input[type=number]{
+    width: 3vw;
+}

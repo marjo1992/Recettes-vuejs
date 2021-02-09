@@ -1,0 +1,10 @@
+.vignetteCategorie {
+    background-color: var(--colorBlueLight);
+    box-shadow: var(--vignetteBoxShadowSize) var(--colorBlueLight);
+    color: var(--colorBlueDark);
+    transition: transform 0.3s;
+}
+
+.vignetteCategorie:hover {
+    transform: scale(1.05);
+}

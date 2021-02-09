@@ -1,0 +1,10 @@
+.vignetteArticle {
+    background-color: var(--colorOrangeLight);
+    box-shadow: var(--vignetteBoxShadowSize) var(--colorOrangeLight);
+    color: var(--colorOrangeDark);
+    transition: transform 0.3s;
+}
+
+.vignetteArticle:hover {
+    transform: scale(1.05);
+}

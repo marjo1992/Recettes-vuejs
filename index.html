@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Les Recettes de Marjolaine</title>
+
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="./app.css" />
+	<link rel="stylesheet" type="text/css" href="./ressources/font/icone/style.css" />
+	<link rel="stylesheet" type="text/css" href="./navbar/navbar.css" />
+	<link rel="stylesheet" type="text/css" href="./navbar/searchBar/searchBar.css" />
+	<link rel="stylesheet" type="text/css" href="./accueil/accueil.css" />
+	<link rel="stylesheet" type="text/css" href="./admin/admin.css" />
+	<link rel="stylesheet" type="text/css" href="./domaine/domaine.css" />
+	<link rel="stylesheet" type="text/css" href="./categorie/categorie.css" />
+	<link rel="stylesheet" type="text/css" href="./recette/recette.css" />
+	<link rel="stylesheet" type="text/css" href="./recette/blocInfosIngredientsUstensiles/blocInfosIngredientsUstensiles.css" />
+	<link rel="stylesheet" type="text/css" href="./recette/blocRecetteInfosAnnexes/blocRecetteInfosAnnexes.css" />
+	<link rel="stylesheet" type="text/css" href="./article/article.css" />
+	<link rel="stylesheet" type="text/css" href="./recherche/recherche.css" />
+	<link rel="stylesheet" type="text/css" href="./vignetteCategorie/vignetteCategorie.css" />
+	<link rel="stylesheet" type="text/css" href="./vignetteArticle/vignetteArticle.css" />
+	<link rel="stylesheet" type="text/css" href="./vignetteRecette/vignetteRecette.css" />
+	<link rel="stylesheet" type="text/css" href="./categorieMenu/categorieMenu.css" />
+	<link rel="stylesheet" type="text/css" href="./inputNumber/inputNumber.css" />
+	<link rel="stylesheet" type="text/css" href="./carousselPhotos/carousselPhotos.css" />
+
+	<!-- Libraries -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.5.1/vue-router.js"></script>
+	<script src="https://unpkg.com/showdown@1.x/dist/showdown.js"></script>
+	<script src="https://unpkg.com/vue-showdown@2.x/dist/vue-showdown.js"></script>
+	<script src="https://unpkg.com/@trevoreyre/autocomplete-vue"></script>
+	<script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
+	<link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
+
+	<!-- app -->
+	<script src="./sources/articles/le_sucre.js"></script>
+
+	<script src="./recettes_cuisine.js"></script>
+	<script src="./recettes_maison.js"></script>
+	<script src="./recettes_cosmetique.js"></script>
+	<script src="./categories_cuisine.js"></script>
+	<script src="./categories_maison.js"></script>
+	<script src="./categories_cosmetique.js"></script>
+	<script src="./articles.js"></script>
+	<script src="./accueil/accueil.js"></script>
+	<script src="./admin/admin.js"></script>
+	<script src="./navbar/navbar.js"></script>
+	<script src="./navbar/searchBar/searchBar.js"></script>
+	<script src="./domaine/domaine.js"></script>
+	<script src="./categorie/categorie.js"></script>
+	<script src="./recette/recette.js"></script>
+	<script src="./recette/blocInfosIngredientsUstensiles/blocInfosIngredientsUstensiles.js"></script>
+	<script src="./recette/blocRecetteInfosAnnexes/blocRecetteInfosAnnexes.js"></script>
+	<script src="./article/article.js"></script>
+	<script src="./recherche/recherche.js"></script>
+	<script src="./vignetteCategorie/vignetteCategorie.js"></script>
+	<script src="./vignetteArticle/vignetteArticle.js"></script>
+	<script src="./vignetteRecette/vignetteRecette.js"></script>
+	<script src="./categorieMenu/categorieMenu.js"></script>
+	<script src="./inputNumber/inputNumber.js"></script>
+	<script src="./carousselPhotos/carousselPhotos.js"></script>
+	<script src="./utils.js"></script>
+</head>
+<body>
+	<div id="app">
+		<navbar></navbar>
+		<router-view>
+	</div>
+</body>
+<script src="./app.js"></script>
+</html>

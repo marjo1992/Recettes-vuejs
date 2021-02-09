@@ -1,0 +1,10 @@
+#accueil {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    flex-wrap: wrap;
+}
+#accueil div {
+    width:30vw;
+    height: 5vh;
+}

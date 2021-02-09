@@ -1,0 +1,43 @@
+
+
+:root {
+    --domainesWidth: 35vw;
+    --titreSiteWidth: calc(calc(100vw - var(--domainesWidth)) * 0.5);
+    --searchBarWidth: var(--titreSiteWidth);
+}
+
+#navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--colorGreenLight);
+    height: calc(var(--navbarHeight) - 3vh);
+    font-size: 2vw;
+    width: 99vw;
+    padding: 1.5vh 0.5vw;
+}
+
+#navbar #domaines {
+    display: flex;
+    flex-direction: row;
+    width: var(--domainesWidth);
+    justify-content: space-between;
+    color: var(--colorGreenDark);
+    font-size: 2vw;
+    font-weight: bold;
+    text-shadow: var(--textShadowLittle);
+}
+
+#titreSite {
+    font-family: titleFont;
+    width: var(--titreSiteWidth);
+    font-size: 2vw;
+    font-weight: bold;
+    text-shadow: var(--textShadowLittle);
+    color: var(--colorTitle);
+}
+
+#searchBar {
+    width: var(--searchBarWidth);
+}

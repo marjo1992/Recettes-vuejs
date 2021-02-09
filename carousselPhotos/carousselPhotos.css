@@ -1,0 +1,58 @@
+.carousselPhotos {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.carousselPhotosPuces {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 6vh;
+}
+
+.carousselPhotosImages {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    flex-grow: 1;
+}
+
+.imageCaroussel {
+    width: 80%;
+    align-self: stretch;
+    background-size: cover;
+    background-position: center;
+    margin-top: 2vh;
+    border-radius: 20px;
+}
+
+.cercle {
+    height: 1.5vh;
+    width: 1.5vh;
+    border-radius: 1.5vh;
+    background: var(--colorPinkDark);
+    margin: 0 0.4vh;
+    opacity: 0.4;
+    cursor: pointer;
+}
+.cercle.selected {
+    opacity: 1;
+}
+
+[class^="fleche-"], [class*=" fleche-"] {
+    width: 0.75vw;
+    height: 1.25vw;
+    background-color: var(--colorPinkDark);
+    cursor: pointer;
+}
+
+.fleche-droite {
+    clip-path: polygon(0 0, 0 100%, 100% 50%);
+}
+
+.fleche-gauche {
+    clip-path: polygon(100% 100%, 100% 0, 0 50%);
+}

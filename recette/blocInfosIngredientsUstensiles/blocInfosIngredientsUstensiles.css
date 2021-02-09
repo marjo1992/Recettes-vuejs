@@ -1,0 +1,21 @@
+#blocInfosIngredientsUstensiles {
+    width: 25%;
+    background-color: var(--colorPinkLight);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.5vw 0;
+    overflow-y: auto;
+}
+
+#blocInfosIngredientsUstensiles #blocInfoDiverses {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+#blocInfosIngredientsUstensiles #blocInfoDiverses #blocNbPortion{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1vw;
+}

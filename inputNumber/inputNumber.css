@@ -1,0 +1,24 @@
+.inputNumber {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 0.3vw;
+    font-weight: bold;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 3vw;
+    text-align: center;
+}
+.inputNumberSigne {
+    flex-grow: 1;
+    background-color: var(--colorPinkDark);
+    color: white;
+    cursor: pointer;
+}
+.inputNumberSigne::selection {
+    background: inherit;
+}
+.inputValeur {
+    flex-grow: 1;
+    background-color:rgb(255 255 255 / 0.6);
+}

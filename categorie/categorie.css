@@ -1,0 +1,25 @@
+#categorie {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: calc(97vh - var(--navbarHeight));
+    overflow-y: auto;
+}
+
+#categorie #central {
+	flex-direction: row;
+	flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+#menuGauche {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height:calc(98vh - var(--navbarHeight));
+    padding: 1vh 1vw;
+    width: 9vw;
+    align-items: stretch;
+}

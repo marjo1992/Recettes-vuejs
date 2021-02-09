@@ -1,0 +1,75 @@
+:root {
+    --titleHeight: 60px;
+    --categoriesHeight: 50px;
+    --contentHeight: calc(calc(calc(97vh - var(--navbarHeight)) - var(--titleHeight)) - var(--categoriesHeight));
+}
+
+#recette {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: calc(100vh - var(--navbarHeight));
+    letter-spacing: 0.5px;
+}
+
+#recette h1 {
+    height: var(--titleHeight);
+    color: var(--colorPinkDark);
+}
+
+#recette h2 {
+    color: var(--colorPinkDark);
+}
+
+#recette #central {
+    flex-direction: column;
+    width: 70vw;
+}
+
+#recette #categories {
+    height: var(--categoriesHeight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--colorBlueDark);
+    font-size: 1.2vw;
+    font-weight: bold;
+    text-shadow: var(--textShadow);
+}
+
+#recette #categories span:before { content: " - "; } /* les espaces sont des espaces de charcode 160 (nbsp), et non un charcode 32 (espace classique). Récupérable avec la formule String.fromCharCode(160) */
+#recette #categories span:first-child:before { content: ""; }
+
+#recette #blocIngredientsEtapesPhotos{
+    height: var(--contentHeight);
+    display:flex;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#recette #blocEtapesVariantesRemarques {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+}
+
+#recette #blocEtapesVariantesRemarques ::selection {
+    background: var(--colorPinkLight);
+}
+
+#recette #blocPhotos {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--colorPinkLight);
+}
+
+#recette #blocPhotos #photosRecette {
+    height: 40vh;
+    display: flex;
+}

@@ -1,0 +1,93 @@
+:root {
+    --titleArticleHeight: 100px;
+    --contentArticleHeight: calc(calc(97vh - var(--navbarHeight)) - var(--titleArticleHeight));
+}
+
+#article {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: calc(100vh - var(--navbarHeight));
+    letter-spacing: 0.7px;
+}
+
+#article ::selection {
+    background: var(--colorOrangeLight);
+}
+
+#article h1 {
+    height: var(--titleArticleHeight);
+    color: var(--colorOrangeDark);
+}
+
+#article :is(h2, h3, h4, h5, h6) {
+    justify-content: flex-start;
+}
+
+#article h2 {
+    color: var(--colorOrangeDark);
+    font-size: 1.5vw;
+}
+
+#article h3 {
+    color: var(--colorGreenDark);
+    font-size: 1.25vw;
+}
+
+#article #central {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+}
+
+#article #blocArticle{
+    height: var(--contentArticleHeight);
+    display:flex;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#article #blocTextArticle {
+    flex-grow: 1;
+    flex-basis: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5vw 1vw;
+    overflow-y: auto;
+}
+
+#article #blocTextArticle img {
+    float: left;
+    height: 250px;
+    margin: 1vw 2vw;
+}
+
+#article #blocTextArticle p:nth-of-type(2n) img {
+    float: right;
+}
+
+#article #blocTextArticle p {
+    margin-bottom: 0;
+}
+
+#article #blocTextArticle ul {
+    margin-top: 1vh;
+    margin-bottom: 0;
+}
+#article #blocTextArticle :is(h1, h2, h3, h4, h5, h6) {
+    margin-bottom: 0;
+}
+
+#article .blocPhotos {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--colorOrangeLight);
+    opacity: 0.6;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

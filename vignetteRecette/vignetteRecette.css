@@ -1,0 +1,40 @@
+.vignetteRecette {
+    background-color: var(--colorOrangeLight);
+    box-shadow: var(--vignetteBoxShadowSize) var(--colorPinkLight);
+    color: var(--colorPinkDark);
+}
+
+.vignetteRecette .infoSup {
+    position: absolute;
+    margin-right: calc(var(--vignetteWidth) * -1);
+    height: var(--vignetteHeight);
+    width: 0;
+    background: rgb(255 207 175 / 0.95);
+    font-size: 1.2vw;
+    text-shadow: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    color: var(--colorPinkDark);
+    overflow: hidden;
+    width: 50%;
+    transition: transform 0.3s;
+    transition-delay: 0.3s;
+    transform: translateX(50%);
+    font-weight: normal;
+}
+
+.vignetteRecette:hover .infoSup {
+    transform: translateX(-49%);
+}
+
+.vignetteRecette .detailRecetteCategorie {
+    color: var(--colorBlueDark);
+    font-size: 1vw;
+    position: absolute;
+    margin-top: calc(calc(var(--vignetteHeight) * -1) + 1.5vw);
+}
+
+.vignetteRecette .detailRecetteCategorie span:before { content: " - "; }
+.vignetteRecette .detailRecetteCategorie span:first-child:before { content: ""; }
