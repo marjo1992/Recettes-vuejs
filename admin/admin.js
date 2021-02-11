@@ -23,18 +23,16 @@ let admin = {
                 <span class="nomChamp">Tags</span>
                 <div class="champ">
                     <vue-multiselect v-model="tagsRecette" :options="tags" :multiple="true"
-                            :close-on-select="false" 
-                            :clear-on-select="false"
-                            :preserve-search="true" 
-                            placeholder="">
+                            :close-on-select="false" :clear-on-select="false" :preserve-search="true" 
+                            placeholder="Choisissez un ou des tags existants">
                         <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
                     </vue-multiselect>
-                    <input v-model="nouveauxTags">
+                    <input v-model="nouveauxTags" placeholder="Ex: tag 1, tag 2">
                 </div>
             </div>
-            <div><span class="nomChamp">Images</span><div class="champ"><textarea v-model="images"></textarea></div></div>
+            <div><span class="nomChamp">Images</span><div class="champ"><TextareaAutosize v-model="images"/></div></div>
             <div><span class="nomChamp">Nombre de portion</span><div class="champ"><inputNumber v-model="nbPortions" min="1"></inputNumber></div></div>
-            <div><span class="nomChamp">Définition de portion</span><div class="champ"><input v-model="defPortion" placeholder="ex : petit pot"></div></div>
+            <div><span class="nomChamp">Définition de portion</span><div class="champ"><input v-model="defPortion" placeholder="Ex: petit pot"></div></div>
             <div><span class="nomChamp">Temp de cuisson (en min)</span><div class="champ"><input type="number" v-model="tempsCuissonMin"></div></div>
             <div><span class="nomChamp">Temp de préparation (en min)</span><div class="champ"><input type="number" v-model="tempsPreparationMin"></div></div>
             <div><span class="nomChamp">Temp d'attente (en min)</span><div class="champ"><input type="number" v-model="tempsAttenteMin"></div></div>
@@ -44,11 +42,11 @@ let admin = {
             <div><span class="nomChamp">Lipides (en g, pour la quantité total)</span><div class="champ"><input type="number" v-model="lipides"></div></div>
             <div><span class="nomChamp">Proteines (en g, pour la quantité total)</span><div class="champ"><input type="number" v-model="proteines"></div></div>
             
-            <div><span class="nomChamp">Ingrédients</span><div class="champ"><textarea v-model="ingredients" placeholder="Ex: Petit pain 3 cuillères à soupe (ingrédient quantité unité)"></textarea></div></div>
-            <div><span class="nomChamp">Etapes</span><div class="champ"><textarea v-model="etapes"></textarea></div></div>
-            <div><span class="nomChamp">Variantes</span><div class="champ"><textarea v-model="variantes"></textarea></div></div>
-            <div><span class="nomChamp">Remarques</span><div class="champ"><textarea v-model="remarques"></textarea></div></div>
-            <div><span class="nomChamp">Inspirations</span><div class="champ"><textarea v-model="inspirations" placeholder="Ex: [nom](url) note"></textarea></div></div>
+            <div><span class="nomChamp">Ingrédients</span><div class="champ"><TextareaAutosize v-model="ingredients" placeholder="Ex: Petit pain 3 cuillères à soupe (ingrédient quantité unité)"/></div></div>
+            <div><span class="nomChamp">Etapes</span><div class="champ"><TextareaAutosize v-model="etapes"/></div></div>
+            <div><span class="nomChamp">Variantes</span><div class="champ"><TextareaAutosize v-model="variantes"/></div></div>
+            <div><span class="nomChamp">Remarques</span><div class="champ"><TextareaAutosize v-model="remarques"/></div></div>
+            <div><span class="nomChamp">Inspirations</span><div class="champ"><TextareaAutosize v-model="inspirations" placeholder="Ex: [nom](url) note"/></div></div>
         </div>
         <div id="affichage">
             <div id="boutonGenerer" @click="generate">{{bouton}}</div>
