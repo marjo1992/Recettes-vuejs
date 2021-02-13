@@ -1,6 +1,7 @@
 @font-face {
   font-family: 'icomoon';
-  src: url('icomoon.ttf') format('truetype'),
+  src:  url('icomoon.eot');
+  src:  url('icomoon.ttf') format('truetype'),
     url('icomoon.woff') format('woff'),
     url('icomoon.svg') format('svg');
   font-weight: normal;
@@ -23,6 +24,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-variante:before {
+  content: "\e908 ";
+}
+.icon-ustensile:before {
+  content: "\e903 ";
+}
+.icon-etape:before {
+  content: "\e904 ";
+}
+.icon-ingredient:before {
+  content: "\e905 ";
+}
+.icon-inspiration:before {
+  content: "\e906 ";
+}
+.icon-remarque:before {
+  content: "\e907 ";
+}
 .icon-preparation:before {
   content: "\e900 ";
 }
@@ -31,22 +50,4 @@
 }
 .icon-cuisson:before {
   content: "\e902 ";
-}
-.icon-ingredient:before {
-  content: "\e901 ";
-}
-.icon-ustensile:before {
-  content: "\e900 ";
-}
-.icon-remarque:before {
-  content: "\e900 ";
-}
-.icon-variante:before {
-  content: "\e900 ";
-}
-.icon-etape:before {
-  content: "\e900 ";
-}
-.icon-inspiration:before {
-  content: "\e900 ";
 }
