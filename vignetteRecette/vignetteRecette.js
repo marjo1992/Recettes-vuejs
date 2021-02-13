@@ -6,7 +6,7 @@ Vue.component("vignetteRecette", {
         <div class="detailRecetteCategorie">
             <span v-for="categorie in categoriesRecette"> {{categorie.nom}}</span>
         </div>
-        <div>{{recette.nom}}</div>
+        <div class="nomRecette">{{recette.nom}}</div>
         <div class="infoSup">
             <div v-if="recette.tempsPreparationMin"><span class="icon-preparation"></span>  {{recette.tempsPreparationMin}} min</div>
             <div v-if="recette.tempsCuissonMin"><span class="icon-cuisson"></span>  {{recette.tempsCuissonMin}} min</div>

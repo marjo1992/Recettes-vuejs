@@ -1,5 +1,5 @@
 :root {
-    --titleArticleHeight: 100px;
+    --titleArticleHeight: 80px;
     --contentArticleHeight: calc(calc(97vh - var(--navbarHeight)) - var(--titleArticleHeight));
 }
 

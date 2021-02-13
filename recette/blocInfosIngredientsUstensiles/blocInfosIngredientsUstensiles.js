@@ -19,7 +19,7 @@ Vue.component("blocInfosIngredientsUstensiles", {
             <h2>Ingrédients</h2>
             <div class="listeObject">
                 <span v-for="ingredient in recette.ingredients">
-                    <span class="icon-ingredient"></span>{{ingredient.quantite * nbPortionsInput / nbPotionsInitial}} {{ingredient.unite}} {{ingredient.nom}}
+                    <span class="icon-ingredient"></span><span v-if="ingredient.quantite">{{ingredient.quantite * nbPortionsInput / nbPotionsInitial}} </span><span v-if="ingredient.unite">{{ingredient.unite}} </span>{{ingredient.nom}}
                 </span>
             </div>
         </div>

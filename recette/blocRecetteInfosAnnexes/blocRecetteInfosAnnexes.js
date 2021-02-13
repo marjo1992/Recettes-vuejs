@@ -7,7 +7,7 @@ Vue.component("blocRecetteInfosAnnexes", {
                 <span v-for="tag in recette.tags">{{tag}}</span>
             </div>
         </div>
-        <div id="blocApportsNutritionels" v-if="recette.apportNutritionelTotal">
+        <div id="blocApportsNutritionels" v-if="recette.apportNutritionelTotal && recette.apportNutritionelTotal.length">
             <h2>Apports nutritionels</h2>
             <div id="apportNutritionels" >
                 <div id="apportNutritionelsTypes" class="apportNutritionelsLigne">
@@ -25,7 +25,7 @@ Vue.component("blocRecetteInfosAnnexes", {
         <div id="inspirations">
             <h2>Inspirations</h2>
             <div class="listeObject">
-                <span v-for="inspiration in recette.inspirations"><span class="icon-inspiration"></span><a :href="inspiration.url">{{inspiration.nom}}</a> {{inspiration.note}}</span>
+                <span v-for="inspiration in recette.inspirations"><span class="icon-inspiration"></span><a :href="inspiration.url" target="_blank">{{inspiration.nom}}</a> {{inspiration.note}}</span>
             </div>
         </div>		
         </div>

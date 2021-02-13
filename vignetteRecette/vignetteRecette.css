@@ -2,6 +2,7 @@
     background-color: var(--colorOrangeLight);
     box-shadow: var(--vignetteBoxShadowSize) var(--colorPinkLight);
     color: var(--colorPinkDark);
+    font-size: 1.5vw;
 }
 
 .vignetteRecette .infoSup {

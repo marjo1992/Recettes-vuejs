@@ -27,7 +27,7 @@
     flex-direction: row;
     justify-content: flex-start;
     padding: 1vh 0 0 3vw;
-    color:var(--colorGreenDark);
+    color:var(--colorBlueLight);
 }
 
 .blocSousCategorie {
