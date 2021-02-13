@@ -2,7 +2,8 @@ const recettesCuisine = [
 {
     nom : "Riz au lait",
     dateAjout : "17/01/2021",
-    categories : [1, 3],
+    categories : [1, 11],
+    sousCategories : [],
     tags :  ["riz", "four"],
     tempsPreparationMin : 50,
     tempsAttenteMin : 30,
@@ -62,7 +63,8 @@ const recettesCuisine = [
 {
     nom : "Oeuf au lait",
     dateAjout : "18/01/2021",
-    categories : [1, 2],
+    categories : [1, 2, 11],
+    sousCategories : [11.2, 11.3],
     tags :  ["oeuf", "four", "bento", "sucré", "dessert", "individuel"],
     images : ["_sources/cuisine/images/creme aux oeufs.jpg", "_sources/cuisine/images/oeufs au lait.jpg"],
     nbPortions : 2,

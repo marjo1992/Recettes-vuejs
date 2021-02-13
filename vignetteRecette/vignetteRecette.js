@@ -13,12 +13,6 @@ Vue.component("vignetteRecette", {
             <div v-if="recette.tempsAttenteMin"><span class="icon-attente"></span>  {{recette.tempsAttenteMin}} min</div>      
         </div>
     </div>`,
-    data() {
-        return {
-            categoriesRecette: 
-                this.recette.categories.map(this.getCategorieById)
-        }
-    },
     computed: {
         style() {
             let style = {};
@@ -26,6 +20,9 @@ Vue.component("vignetteRecette", {
                 style.backgroundImage = `url("${this.recette.images[0]}")`;
             }
             return style;
+        },
+        categoriesRecette(){
+            return this.recette.categories.map(this.getCategorieById)
         }
     },
     methods: {

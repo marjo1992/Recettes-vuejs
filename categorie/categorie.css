@@ -7,9 +7,7 @@
 }
 
 #categorie #central {
-	flex-direction: row;
-	flex-wrap: wrap;
-    align-content: flex-start;
+	flex-direction: column;
 }
 
 #menuGauche {
@@ -22,4 +20,24 @@
     padding: 1vh 1vw;
     width: 9vw;
     align-items: stretch;
+}
+
+#categorie h1 {
+	display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 1vh 0 0 3vw;
+    color:var(--colorGreenDark);
+}
+
+.blocSousCategorie {
+	display: flex;
+    flex-direction: column;
+}
+
+.recettesSousCategorie {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+    align-content: flex-start;
 }

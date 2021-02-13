@@ -20,6 +20,15 @@ let admin = {
                 </div>
             </div>
             <div>
+                <span class="nomChamp">Sous-categories</span>
+                <div class="champ">
+                    <vue-multiselect v-model="sousCategories" :options="categories" :multiple="true"
+                        group-values="sousCategories" group-label="nom" :group-select="true" 
+                        track-by="id" label="nom">
+                    </vue-multiselect>
+                </div>
+            </div>
+            <div>
                 <span class="nomChamp">Tags</span>
                 <div class="champ">
                     <vue-multiselect v-model="tagsRecette" :options="tags" :multiple="true"
@@ -63,6 +72,7 @@ let admin = {
 		return {
             domaineRecette : "",
             categories: [],
+            sousCategories: [],
             images: "",
             nbPortions: 1,
             defPortion: "",
@@ -91,7 +101,7 @@ let admin = {
     },
     computed: {
         categoriesDuDomaine() {
-            return chargerCategories(this.domaineRecette);
+            return chargerCategories(this.domaineRecette) || [];
         },
         recette() {
             let apportNutritionelTotal = [];
@@ -106,6 +116,7 @@ let admin = {
                 nom : this.nom,
                 dateAjout : this.date,
                 categories : this.categories.map(c => c.id),
+                sousCategories : this.sousCategories.map(c => c.id),
                 images: this.images.split('\n').filter(e => e),
                 tags: [...(this.tagsRecette||[]), ...nouveauxTagsSplit],
                 tempsPreparationMin : this.tempsPreparationMin,
