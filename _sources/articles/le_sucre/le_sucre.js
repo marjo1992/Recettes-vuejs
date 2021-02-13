@@ -5,7 +5,7 @@ Catégories : Les ingrédients de base en cuisine
 ## Les sucres blancs
 
 
-![sucre blanc](sources/articles/le_sucre/sucres_blanc.jpg)
+![sucre blanc](_sources/articles/le_sucre/sucres_blanc.jpg)
 Il est issu de la canne à sucre ou de la betterave sucrière.
 Il est composé à 99% de saccharose (molécule contenant du glucose et fructose).
 Son index glycémique est élevé (IG 70).
@@ -26,7 +26,7 @@ Les différentes types de sucre roux :
 * la cassonade
 * la vergeoise
 
-![sucre roux](sources/articles/le_sucre/sucres_roux.jpg)
+![sucre roux](_sources/articles/le_sucre/sucres_roux.jpg)
 Les nutriments et vitamines sont très pauvres dans ce type de sucre (un peu plus que dans le sucre blanc mais de manière infime).
 Entre 94% et 99% de sucre, le reste principalement en eau, de pigments naturels et un peu de minéraux (0,5 g pour 100 g de sucre) et quelques vitamines du groupe B.
 Il s'utilise comme le sucre blanc.

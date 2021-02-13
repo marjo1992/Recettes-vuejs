@@ -64,7 +64,7 @@ const recettesCuisine = [
     dateAjout : "18/01/2021",
     categories : [1, 2],
     tags :  ["oeuf", "four", "bento", "sucré", "dessert", "individuel"],
-    images : ["ressources/images/cuisine/creme aux oeufs.jpg", "ressources/images/cuisine/oeufs au lait.jpg"],
+    images : ["_sources/cuisine/images/creme aux oeufs.jpg", "_sources/cuisine/images/oeufs au lait.jpg"],
     nbPortions : 2,
     defPortion : "gros pot",
     tempsPreparationMin : 50,

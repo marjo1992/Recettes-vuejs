@@ -1,13 +1,35 @@
-const recettesMaison = [
+const recettesCosmetique = [
 {
     nom : "riz au lait",
     dateAjout : "17/01/2021",
     categories : [1, 2],
-    tags :  ["riz", "four"],
-    images : ["ressources/images/recettes/img1.jpg", "ressources/images/recettes/img2.jpg"],
+    tags :  ["riz", "foufoufou"],
+    images : [],
     nbPortions : 2,
     defPortion : "1 petit pot",
     tempsPreparationMin : 50,
+    tempsCuissonMin : 50,
+    apportNutritionelTotal : [
+        {
+            type : "kcal",
+            quantite : 100
+        },
+        {
+            type : "glucide",
+            quantite : 100,
+            unite : "g"
+        },
+        {
+            type : "proteine",
+            quantite : 100,
+            unite : "g"
+        },
+        {
+            type : "lipides",
+            quantite : 100,
+            unite : "g"
+        }
+    ],
     ingredients : [
         {
             nom : "oeuf",
@@ -44,7 +66,7 @@ const recettesMaison = [
     dateAjout : "18/01/2021",
     categories : [1, 2],
     tags :  ["oeuf", "four"],
-    images : ["ressources/images/recettes/img3.jpg", "ressources/images/recettes/img4.jpg"],
+    images : [],
     nbPortions : 2,
     defPortion : "1 gros pot",
     tempsPreparationMin : 50,

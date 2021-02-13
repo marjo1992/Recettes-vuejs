@@ -26,12 +26,12 @@
 
 @font-face {
   font-family: primaryFont;
-  src: url("./ressources/font/Cutie Bear.ttf");
+  src: url("./_ressources/font/Cutie Bear.ttf");
 }
 
 @font-face {
     font-family: titleFont;
-    src: url("./ressources/font/SilverFlower.ttf");
+    src: url("./_ressources/font/SilverFlower.ttf");
 }
 
 body {
@@ -40,7 +40,7 @@ body {
     font-family: primaryFont;
     font-size: 1vw;
 	background-color: var(--colorIvoire);
-	background-image: url(./ressources/images/filtre_blanc_transparence_225.png), url(./ressources/images/fond.png);
+	background-image: url(./_ressources/images/filtre_blanc_transparence_225.png), url(./_ressources/images/fond.png);
     background-size: 1000px, 1000px;
 }
 
