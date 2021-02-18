@@ -14,7 +14,7 @@ Vue.component("vignetteArticle", {
     },
     methods: {
         goToArticle() {
-            this.$router.push({name:"article", params:{article: this.article.nom}})
+            this.$router.push({name:"article", params:{article: this.article.nom}}).catch(()=>{})
         }
     }
 })

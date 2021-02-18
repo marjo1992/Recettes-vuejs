@@ -58,31 +58,29 @@ let admin = {
             <div><span class="nomChamp">Inspirations</span><div class="champ"><TextareaAutosize v-model="inspirations" placeholder="Ex: [nom](url) note"/></div></div>
         </div>
         <div id="affichage">
-            <div id="boutonGenerer" @click="generate">{{bouton}}</div>
+            <div id="boutonGenerer" @click="generate">Enregistrer</div>
             <pre>{{resultat}}</pre>
         </div>
-	</div>`,
+    </div>`,
 	data() {
 		let domaines = ["Cuisine", "Maison", "Cosmetique"]
-		let recettes = [...recettesCuisine, ...recettesCosmetique, ...recettesMaison]
-		let tags = new Set();
-        recettes.flatMap(r => r.tags).forEach(t => tags.add(t));
         let date = new Date();
-        let nomBoutonInitial = "Copier"
 		return {
+            recettes: RECETTES,
             domaineRecette : "",
+            mapCategoriesParDomaine: CATEGORIES,
             categories: [],
             sousCategories: [],
             images: "",
             nbPortions: 1,
             defPortion: "",
-            tempsCuissonMin: undefined,
-            tempsPreparationMin: undefined,
-            tempsAttenteMin: undefined,
-            kcal: undefined,
-            glucides: undefined,
-            lipides: undefined,
-            proteines: undefined,
+            tempsCuissonMin: null,
+            tempsPreparationMin: null,
+            tempsAttenteMin: null,
+            kcal: null,
+            glucides: null,
+            lipides: null,
+            proteines: null,
             ingredients: "",
             etapes: "",
             variantes: "",
@@ -90,18 +88,19 @@ let admin = {
             inspirations: "",
             nom : "",
             domaines,
-            tags : [...tags].sort(),
             tagsRecette: null,
             nouveauxTags:"",
-            date: `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`,
-            options: ['list', 'of', 'options'],
-            boutonNomInitial: nomBoutonInitial,
-            bouton: nomBoutonInitial
+            date: `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
 		}
     },
     computed: {
+        tags() {
+            let tags = new Set();
+            this.recettes.filter(r => r.tags).flatMap(r => r.tags).forEach(t => tags.add(t));
+            return [...tags].sort();
+        },
         categoriesDuDomaine() {
-            return chargerCategories(this.domaineRecette) || [];
+            return this.mapCategoriesParDomaine[this.domaineRecette] || [];
         },
         recette() {
             let apportNutritionelTotal = [];
@@ -113,6 +112,7 @@ let admin = {
             let regexInspirations = /^\[(.*)\](\((.*)\))?( (.*))?/;
             let nouveauxTagsSplit = this.nouveauxTags.split(', ').filter(e => e)
             return {
+                domaine : this.domaineRecette,
                 nom : this.nom,
                 dateAjout : this.date,
                 categories : this.categories.map(c => c.id),
@@ -129,8 +129,8 @@ let admin = {
                     let res = regexIngredients.exec(i);
                     return {
                         nom: res[1],
-                        quantite: res[3],
-                        unite: res[5]
+                        quantite: res[3] || null,
+                        unite: res[5] || null
                     }
                 }),
                 etapes : this.etapes.split('\n').filter(e => e),
@@ -140,8 +140,8 @@ let admin = {
                     let res = regexInspirations.exec(i);
                     return {
                         nom: res[1],
-                        url: res[3],
-                        note: res[5]
+                        url: res[3] || null,
+                        note: res[5] || null
                     }
                 })
             }
@@ -156,12 +156,35 @@ let admin = {
 			return this.tags.filter(t => t.toLowerCase().includes(input.toLowerCase()))
         },
         generate() {
-            navigator.clipboard
-                .writeText(this.resultat)
-                .then( x => 
-                    (this.bouton = "Copié dans le presse-papier")
-                    && window.setTimeout(_ => this.bouton = this.boutonNomInitial, 3000)
-                )
+            var postListRef = firebase.database().ref('recettes');
+            var newPostRef = postListRef.push();
+            newPostRef.set(this.recette);
+            this.reinit()
+        },
+        reinit() {
+            let date = new Date();
+            this.domaineRecette = "";
+            this.categories= [];
+            this.sousCategories= [];
+            this.images= "";
+            this.nbPortions= 1;
+            this.defPortion= "";
+            this.tempsCuissonMin= null;
+            this.tempsPreparationMin= null;
+            this.tempsAttenteMin= null;
+            this.kcal= null;
+            this.glucides= null;
+            this.lipides= null;
+            this.proteines= null;
+            this.ingredients= "";
+            this.etapes= "";
+            this.variantes= "";
+            this.remarques= "";
+            this.inspirations= "";
+            this.nom = "";
+            this.tagsRecette= null;
+            this.nouveauxTags="";
+            this.date= `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
         }
     }
 }

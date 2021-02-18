@@ -14,7 +14,7 @@ Vue.component("vignetteCategorie", {
     },
     methods: {
         goToCategorie() {
-            this.$router.push({name:"categorie", params:{domaine: this.$route.params.domaine, categorie: this.categorie.nom}})
+            this.$router.push({name:"categorie", params:{domaine: this.$route.params.domaine, categorie: this.categorie.nom}}).catch(()=>{})
         }
     }
 })

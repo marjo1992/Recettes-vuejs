@@ -8,7 +8,7 @@ let recette = {
 				:key="categorie.id">
 			</categorieMenu>
 		</div>
-		<div id="recette">
+		<div id="recette" v-if="recette">
 			<div id="central">
 				<h1>{{recette.nom}}</h1>
 				<div id="categories">
@@ -44,25 +44,28 @@ let recette = {
 				</div>
 			</div>
 		</div>
-		<blocRecetteInfosAnnexes :recette="recette" :nbPortions="nbPortions"></blocRecetteInfosAnnexes>
+		<blocRecetteInfosAnnexes v-if="recette" :recette="recette" :nbPortions="nbPortions"></blocRecetteInfosAnnexes>
 	</div>`,
     data() {
         return {
-			nbPortions : null
+			nbPortions : null,
+			recettesFirebase : RECETTES,
+			categoriesFirebase: CATEGORIES
         }
     },
     computed: {
 		categories() {
-			return chargerCategories(this.$route.params.domaine);
+			return this.categoriesFirebase[this.$route.params.domaine];
 		},
         categorieSelected() {
-            return this.categories.find(c => c.nom === this.$route.params.categorie);
+            return this.categories ? this.categories.find(c => c.nom === this.$route.params.categorie) : {};
         },
 		categoriesRecette() {
 			return this.recette.categories.map(this.getCategorieById);
 		},
 		recette() {
-			return chargerRecettes(this.$route.params.domaine)
+			return this.recettesFirebase
+				.filter(r => r.domaine === this.$route.params.domaine)
 				.filter(r => r.categories.find(c => c === this.categorieSelected.id))
 				.find(r => r.nom === this.$route.params.recette);
 		}

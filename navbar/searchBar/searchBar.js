@@ -16,23 +16,24 @@ Vue.component("searchBar", {
 		<div class="boutonRecherche"></div>
 	</div>`,
 	data() {
-		
-		let objetsPourRechercheParNomRecette = ["Cuisine", "Maison", "Cosmetique"]
-			.flatMap(this.getObjetsPourRechercheParNomRecetteParDomaine)
-		
-		let recettes = [...recettesCuisine, ...recettesCosmetique, ...recettesMaison]
-		let tags = new Set();
-		recettes.flatMap(r => r.tags).forEach(t => tags.add(t));
+		return {
+			mapCategoriesParDomaine : CATEGORIES,
+            recettesFirebase: RECETTES
+		}
+	},
+    computed: {
+        objetsPourRecherche(){
+			let objetsPourRechercheParNomRecette = this.getObjetsPourRechercheParNomRecetteParDomaine(this.recettesFirebase)
 
-		let objetsPourRechercheParTag = [...tags]
-			.map(t => ({
+			let tags = new Set();
+			this.recettesFirebase.flatMap(r => r.tags).forEach(t => tags.add(t));
+	
+			let objetsPourRechercheParTag = [...tags].map(t => ({
 				type:"tag",
 				nom: t
-			}))
-
-		return {
-			objetsPourRecherche : [...objetsPourRechercheParTag, ...objetsPourRechercheParNomRecette].sort()
-		}
+			}));
+            return [...objetsPourRechercheParTag, ...objetsPourRechercheParNomRecette].sort()
+        }
 	},
 	methods: {
 		search(input) {
@@ -59,16 +60,15 @@ Vue.component("searchBar", {
 			this.$router.push({name:"recette", params:{domaine: objetRecherche.domaine, categorie: objetRecherche.categorie, recette: objetRecherche.nom}}).catch(()=>{})
         },
 		getNomCategorieById(domaine, id) {
-			return chargerCategories(domaine).find(c => id === c.id).nom;
+			return this.mapCategoriesParDomaine[domaine].find(c => id === c.id)?.nom;
 		},
-		getObjetsPourRechercheParNomRecetteParDomaine(domaine) {
-			return chargerRecettes(domaine)
-			.map(r => ({
+		getObjetsPourRechercheParNomRecetteParDomaine(recettes) {
+			return recettes.map(r => ({
 				type:"nom recette",
 				nom: r.nom,
 				recette:r,
-				domaine:domaine,
-				categorie:this.getNomCategorieById(domaine, r.categories[0])
+				domaine:r.domaine,
+				categorie:this.getNomCategorieById(r.domaine, r.categories[0])
 			}))
 		}
     }

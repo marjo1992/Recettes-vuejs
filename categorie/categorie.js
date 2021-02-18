@@ -37,28 +37,33 @@ let categorie = {
         </div>
 	</div>`,
     data() {
-        const categories = chargerCategories(this.$route.params.domaine);
-        if (categories) {
-            categories.forEach(r => {
-                if (r.sousCategories) {
-                    r.sousCategories.sort((sc1, sc2) => sc1.nom.localeCompare(sc2.nom))
-                }
-            })
-        }
-
         return {
-            categories
+            recettesFirebase: RECETTES,
+            mapCategoriesParDomaine: CATEGORIES
         }
     },
     computed: {
+        categories(){
+            let categories = this.mapCategoriesParDomaine[this.$route.params.domaine];
+            if (categories) {
+                categories.forEach(r => {
+                    if (r.sousCategories) {
+                        r.sousCategories.sort((sc1, sc2) => sc1.nom.localeCompare(sc2.nom))
+                    }
+                })
+            }
+            return categories
+        },
         domaine(){
             return this.$route.params.domaine
         },
         categorieSelected() {
-            return this.categories.find(c => c.nom === this.$route.params.categorie);
+            return this.categories ? this.categories.find(c => c.nom === this.$route.params.categorie) : {};
         },
         recettes() {
-            return chargerRecettes(this.$route.params.domaine).filter(r => r.categories.find(c => c === this.categorieSelected.id));
+            return this.recettesFirebase
+                .filter(r => r.domaine === this.$route.params.domaine)
+                .filter(r => r.categories.find(c => c === this.categorieSelected.id));
         },
         recettesSansSousCategorie() {
             return this.recettes.filter(r => !r.sousCategories || !r.sousCategories.find(sc => Math.floor(sc) === this.categorieSelected.id));

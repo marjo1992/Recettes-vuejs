@@ -13,6 +13,11 @@ Vue.component("vignetteRecette", {
             <div v-if="recette.tempsAttenteMin"><span class="icon-attente"></span>  {{recette.tempsAttenteMin}} min</div>      
         </div>
     </div>`,
+    data() {
+        return {
+            categoriesFirebase: CATEGORIES
+        }
+    },
     computed: {
         style() {
             let style = {};
@@ -27,10 +32,10 @@ Vue.component("vignetteRecette", {
     },
     methods: {
         goToRecette() {
-            this.$router.push({name:"recette", params:{domaine: this.domaine, categorie: this.categorie || this.categoriesRecette[0].nom, recette: this.recette.nom}})
+            this.$router.push({name:"recette", params:{domaine: this.domaine, categorie: this.categorie || this.categoriesRecette[0].nom, recette: this.recette.nom}}).catch(()=>{})
         },
 		getCategorieById(id) {
-			return chargerCategories(this.domaine).find(c => id === c.id);
+			return this.categoriesFirebase[this.domaine].find(c => id === c.id);
 		},
     }
 })

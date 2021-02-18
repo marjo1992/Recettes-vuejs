@@ -15,15 +15,20 @@ let domaine = {
             </vignetteCategorie>
         </div>
     </div>`,
+    data() {
+        return {
+            categoriesFirebase: CATEGORIES
+        }
+    },
     computed: {
         estArticle() {
-            return this.$route.params.domaine == "Articles"
+            return this.$route.params.domaine === "Articles"
         },
         articles() {
             return chargerArticles()
         },
         categories() {
-            return chargerCategories(this.$route.params.domaine)
+            return this.categoriesFirebase[this.$route.params.domaine] || []
         }
     }
 }
