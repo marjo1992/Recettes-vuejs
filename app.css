@@ -49,6 +49,20 @@ a {
     color: inherit;
 }
 
+button {
+    border: inherit;
+    font: inherit;
+}
+
+button:active {
+    border: inherit;
+}
+
+button:focus {
+    outline: inherit;
+}
+
+
 * {
 	scrollbar-width: thin;
 }

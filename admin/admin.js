@@ -1,6 +1,24 @@
 let admin = {
     template : `<div id="admin">
-        <div id="formulaire">
+        <div id="connexion" v-if="!estConnecte">
+            <form id="signup" method="post" @submit.prevent="connecter">
+                <div id="formulaireConnexion" class="formulaire">
+                    <div>
+                        <span class="nomChamp">Adresse mail</span>
+                        <div class="champ"><input type="text" name="username" v-model="connexionMail" autocomplete="username" required></div>
+                    </div>
+                    <div>
+                        <span class="nomChamp">Mot de passe</span>
+                        <div class="champ"><input type="password" name="password" v-model="connexionMdp" autocomplete="current-password" required></div>
+                    </div>
+                </div>
+                <button class="bouton" type="submit">Se connecter</button>
+                <div id="erreurs">
+                    <div>{{connexionErreurs}}</div>
+                </div>
+            </form>
+        </div>
+        <div class="formulaire" v-else >
             <div><span class="nomChamp">Nom</span><div class="champ"><input v-model="nom"></div></div>
             <div>
                 <span class="nomChamp">Domaine</span>
@@ -57,8 +75,8 @@ let admin = {
             <div><span class="nomChamp">Remarques</span><div class="champ"><TextareaAutosize v-model="remarques"/></div></div>
             <div><span class="nomChamp">Inspirations</span><div class="champ"><TextareaAutosize v-model="inspirations" placeholder="Ex: [nom](url) note"/></div></div>
         </div>
-        <div id="affichage">
-            <div id="boutonGenerer" @click="generate">Enregistrer</div>
+        <div id="affichage"  v-if="estConnecte">
+            <div class="bouton" @click="generate">Enregistrer</div>
             <pre>{{resultat}}</pre>
         </div>
     </div>`,
@@ -90,7 +108,11 @@ let admin = {
             domaines,
             tagsRecette: null,
             nouveauxTags:"",
-            date: `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
+            date: `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`,
+            connexionMail: null,
+            connexionMdp: null,
+            connexionErreurs: null,
+            estConnecte: !!firebase.auth().currentUser
 		}
     },
     computed: {
@@ -108,7 +130,7 @@ let admin = {
             if (this.glucides) apportNutritionelTotal.push({type: "glucides", quantite: this.glucides, unite: "g"});
             if (this.proteines) apportNutritionelTotal.push({type: "proteines", quantite: this.proteines, unite: "g"});
             if (this.lipides) apportNutritionelTotal.push({type: "lipides", quantite: this.lipides, unite: "g"});
-            let regexIngredients = /^(\D+)( (\d+))?( (\D+))?$/;
+            let regexIngredients = /^(\D+)( (\d+(?:\.\d+)?))?( ([^\d\(\)]+))?( \((.*)\))?$/;
             let regexInspirations = /^\[(.*)\](\((.*)\))?( (.*))?/;
             let nouveauxTagsSplit = this.nouveauxTags.split(', ').filter(e => e)
             return {
@@ -130,7 +152,8 @@ let admin = {
                     return {
                         nom: res[1],
                         quantite: res[3] || null,
-                        unite: res[5] || null
+                        unite: res[5] || null,
+                        note: res[7] || null
                     }
                 }),
                 etapes : this.etapes.split('\n').filter(e => e),
@@ -154,6 +177,29 @@ let admin = {
         getTags(input) {
 			if (input.length < 2) { return [] }
 			return this.tags.filter(t => t.toLowerCase().includes(input.toLowerCase()))
+        },
+        connecter(event) {
+            if (this.connexionMail && this.connexionMdp) {
+                event.preventDefault();
+
+                firebase.auth().signInWithEmailAndPassword(this.connexionMail, this.connexionMdp)
+                .then((userCredential) => {
+                    console.log(this.connexionMail + " est connnecté")
+                    this.estConnecte = !!firebase.auth().currentUser
+
+                    if (window.PasswordCredential) {
+                        var c = new PasswordCredential(event.target);
+                        navigator.credentials.store(c)
+                        .then(res => console.log(res));
+                      } else {
+                        return Promise.resolve(profile);
+                      }
+                })
+                .catch((error) => {
+                    console.log(error + ", pouet")
+                    this.connexionErreurs = error.message
+                });
+            }
         },
         generate() {
             var postListRef = firebase.database().ref('recettes');

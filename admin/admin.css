@@ -12,7 +12,35 @@
     overflow: hidden;
 }
 
-#admin #formulaire {
+#admin #connexion {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: darkslategray;
+    width: 100%;
+}
+
+
+#admin #connexion form {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#admin #formulaireConnexion {
+
+    flex-grow: inherit;
+    flex-basis: inherit;
+    padding-bottom: 5vh;
+    color: white;
+}
+
+#admin #erreurs {
+    padding-top: 5vh;
+    color: salmon;
+}
+
+#admin .formulaire {
     display:flex;
     flex-direction: column;
     flex-grow: 1;
@@ -32,7 +60,7 @@
     flex-direction: column;
 }
 
-#admin #boutonGenerer {
+#admin .bouton {
     background-color: teal;
     padding: 0.25vh 1vw;
     border-radius: 20px;
@@ -43,17 +71,17 @@
     cursor: pointer;
 }
 
-#admin #formulaire>div {
+#admin .formulaire>div {
     display:flex;
     flex-direction: row;
     margin-top: 0.5vh;
 }
-#admin #formulaire .champ {
+#admin .formulaire .champ {
     flex-grow: 1;
     flex-basis: 0;
     margin-left: 0.5vw;
 }
-#admin #formulaire .nomChamp {
+#admin .formulaire .nomChamp {
     display:flex;
     flex-direction: row;
     flex-grow: 1;

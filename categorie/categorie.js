@@ -71,7 +71,7 @@ let categorie = {
     },
     methods: {
         recettesParSousCategories(sousCategorieId) {
-            return this.recettes.filter(r => r.sousCategories.includes(sousCategorieId));
+            return this.recettes.filter(r => r.sousCategories && r.sousCategories.includes(sousCategorieId));
         }
     }
 }
