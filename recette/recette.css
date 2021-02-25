@@ -37,6 +37,12 @@
     text-shadow: var(--textShadow);
 }
 
+#recette #iconeModifier {
+    width: 2vw;
+    margin-left: 1vw;
+    cursor: pointer;
+}
+
 #recette #categories span:before { content: " - "; } /* les espaces sont des espaces de charcode 160 (nbsp), et non un charcode 32 (espace classique). Récupérable avec la formule String.fromCharCode(160) */
 #recette #categories span:first-child:before { content: ""; }
 

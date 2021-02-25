@@ -26,16 +26,35 @@ firebase.initializeApp(firebaseConfig);
 
 let RECETTES = [];
 let CATEGORIES = {};
+
+let STORE = {
+	estConnecte : false,
+	recetteAModifier : null
+};
+
 firebase.database().ref('recettes').on('value', res => {
 	RECETTES.length = 0;
-	RECETTES.push(...Object.values(res.val()));
+	for (key in res.val()) {
+		let recette = res.val()[key];
+		recette.uuid = key;
+		RECETTES.push(recette);
+	}
 });
+
 firebase.database().ref('categories').on('value', res => {
 	let val = res.val();
 	Object.keys(val).forEach(k => {
 		Vue.set(CATEGORIES, k, val[k]);
 	});
 });
+
+firebase.auth().onAuthStateChanged(function(user) {
+	if (user) {
+		Vue.set(STORE, "estConnecte", true);
+	} else {
+		Vue.set(STORE, "estConnecte", false);
+	}
+  });
 
 new Vue({
 	el: '#app',

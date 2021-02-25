@@ -69,53 +69,64 @@ let admin = {
             <div><span class="nomChamp">Lipides (en g, pour la quantité total)</span><div class="champ"><input type="number" v-model="lipides"></div></div>
             <div><span class="nomChamp">Proteines (en g, pour la quantité total)</span><div class="champ"><input type="number" v-model="proteines"></div></div>
             
-            <div><span class="nomChamp">Ingrédients</span><div class="champ"><TextareaAutosize v-model="ingredients" placeholder="Ex: Petit pain 3 cuillères à soupe (ingrédient quantité unité)"/></div></div>
+            <div><span class="nomChamp">Ingrédients</span><div class="champ"><TextareaAutosize v-model="ingredients" placeholder="Ex: Petit pain 3 cuillères à soupe (ingrédient quantité unité (note))"/></div></div>
+            <div><span class="nomChamp">Ustensiles</span><div class="champ"><TextareaAutosize v-model="ustensiles" placeholder="Ex: Grand saladier 1 (inox ou verre)"/></div></div>
             <div><span class="nomChamp">Etapes</span><div class="champ"><TextareaAutosize v-model="etapes"/></div></div>
             <div><span class="nomChamp">Variantes</span><div class="champ"><TextareaAutosize v-model="variantes"/></div></div>
             <div><span class="nomChamp">Remarques</span><div class="champ"><TextareaAutosize v-model="remarques"/></div></div>
             <div><span class="nomChamp">Inspirations</span><div class="champ"><TextareaAutosize v-model="inspirations" placeholder="Ex: [nom](url) note"/></div></div>
         </div>
         <div id="affichage"  v-if="estConnecte">
-            <div class="bouton" @click="generate">Enregistrer</div>
+            <div id="boutons">
+                <div class="bouton" @click="generate">Enregistrer</div>
+                <div class="bouton" @click="deconnecter">Se déconnecter</div>
+            </div>
             <pre>{{resultat}}</pre>
         </div>
     </div>`,
 	data() {
 		let domaines = ["Cuisine", "Maison", "Cosmetique"]
         let date = new Date();
+
+        let recetteAModifier = STORE.recetteAModifier
+
 		return {
             recettes: RECETTES,
-            domaineRecette : "",
+            domaineRecette : recetteAModifier? recetteAModifier.domaine : "",
             mapCategoriesParDomaine: CATEGORIES,
-            categories: [],
-            sousCategories: [],
-            images: "",
-            nbPortions: 1,
-            defPortion: "",
-            tempsCuissonMin: null,
-            tempsPreparationMin: null,
-            tempsAttenteMin: null,
-            kcal: null,
-            glucides: null,
-            lipides: null,
-            proteines: null,
-            ingredients: "",
-            etapes: "",
-            variantes: "",
-            remarques: "",
-            inspirations: "",
-            nom : "",
+            categories: recetteAModifier? this.retrieveCategories(recetteAModifier) : [],
+            sousCategories: recetteAModifier? this.retrieveSousCategories(recetteAModifier) : [],
+            images: recetteAModifier? this.retrieveImages(recetteAModifier) : "",
+            nbPortions: recetteAModifier? recetteAModifier.nbPortions : 1,
+            defPortion: recetteAModifier? recetteAModifier.defPortion : "",
+            tempsCuissonMin: recetteAModifier? (recetteAModifier.tempsCuissonMin ? recetteAModifier.tempsCuissonMin : null) : null,
+            tempsPreparationMin: recetteAModifier? (recetteAModifier.tempsPreparationMin ? recetteAModifier.tempsPreparationMin : null) : null,
+            tempsAttenteMin: recetteAModifier? (recetteAModifier.tempsAttenteMin ? recetteAModifier.tempsAttenteMin : null) : null,
+            kcal: recetteAModifier? this.retrieveKcal(recetteAModifier) : null,
+            glucides: recetteAModifier? this.retrieveGlucides(recetteAModifier) : null,
+            lipides: recetteAModifier? this.retrieveLipides(recetteAModifier) : null,
+            proteines: recetteAModifier? this.retrieveProteines(recetteAModifier) : null,
+            ingredients: recetteAModifier? this.retrieveIngredients(recetteAModifier) : "",
+            ustensiles: recetteAModifier? this.retrieveUstensiles(recette) : "",
+            etapes: recetteAModifier? this.retrieveEtapes(recetteAModifier) : "",
+            variantes: recetteAModifier? this.retrieveVariantes(recetteAModifier) : "",
+            remarques: recetteAModifier? this.retrieveRemarques(recetteAModifier) : "",
+            inspirations: recetteAModifier? this.retrieveInspirations(recetteAModifier) : "",
+            nom : recetteAModifier? recetteAModifier.nom : "",
             domaines,
-            tagsRecette: null,
+            tagsRecette: recetteAModifier? this.retrieveTags(recetteAModifier) : null,
             nouveauxTags:"",
-            date: `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`,
+            date:  recetteAModifier? recetteAModifier.dateAjout : `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`,
             connexionMail: null,
             connexionMdp: null,
             connexionErreurs: null,
-            estConnecte: !!firebase.auth().currentUser
+            store:STORE
 		}
     },
     computed: {
+        estConnecte() {
+            return this.store.estConnecte
+        },
         tags() {
             let tags = new Set();
             this.recettes.filter(r => r.tags).flatMap(r => r.tags).forEach(t => tags.add(t));
@@ -131,6 +142,7 @@ let admin = {
             if (this.proteines) apportNutritionelTotal.push({type: "proteines", quantite: this.proteines, unite: "g"});
             if (this.lipides) apportNutritionelTotal.push({type: "lipides", quantite: this.lipides, unite: "g"});
             let regexIngredients = /^(\D+)( (\d+(?:\.\d+)?))?( ([^\d\(\)]+))?( \((.*)\))?$/;
+            let regexUstensiles = /^(\D+)( (\d+(?:\.\d+)?))?( \((.*)\))?$/;
             let regexInspirations = /^\[(.*)\](\((.*)\))?( (.*))?/;
             let nouveauxTagsSplit = this.nouveauxTags.split(', ').filter(e => e)
             return {
@@ -154,6 +166,14 @@ let admin = {
                         quantite: res[3] || null,
                         unite: res[5] || null,
                         note: res[7] || null
+                    }
+                }),
+                ustensiles: this.ustensiles.split('\n').filter(e => regexUstensiles.test(e)).map(i => {
+                    let res = regexUstensiles.exec(i);
+                    return {
+                        nom: res[1],
+                        quantite: res[3] || null,
+                        note: res[5] || null
                     }
                 }),
                 etapes : this.etapes.split('\n').filter(e => e),
@@ -184,9 +204,6 @@ let admin = {
 
                 firebase.auth().signInWithEmailAndPassword(this.connexionMail, this.connexionMdp)
                 .then((userCredential) => {
-                    console.log(this.connexionMail + " est connnecté")
-                    this.estConnecte = !!firebase.auth().currentUser
-
                     if (window.PasswordCredential) {
                         var c = new PasswordCredential(event.target);
                         navigator.credentials.store(c)
@@ -196,16 +213,46 @@ let admin = {
                       }
                 })
                 .catch((error) => {
-                    console.log(error + ", pouet")
                     this.connexionErreurs = error.message
                 });
             }
         },
+        deconnecter() {
+            firebase.auth().signOut().then(() => {
+                // Sign-out successful.
+              }).catch((error) => {
+                // An error happened.
+              });
+        },
         generate() {
+            if (STORE.recetteAModifier) {
+                firebase.database().ref('recettes/' + STORE.recetteAModifier.uuid).remove()
+            }
             var postListRef = firebase.database().ref('recettes');
             var newPostRef = postListRef.push();
-            newPostRef.set(this.recette);
+            newPostRef.set(this.recette, 
+                (error) => {
+                if (error) {
+                  // The write failed...
+                } else {
+                    if (STORE.recetteAModifier) {
+                        firebase.database().ref('recettes/' + STORE.recetteAModifier.uuid).remove()
+                    }
+                }
+              });
+
+            let domaineToGo = this.domaineRecette;
+            let categorieToGo = this.categories[0].nom;
+            let recetteToGo = this.nom;
+
+            STORE.recetteAModifier = null
             this.reinit()
+
+            if (domaineToGo && categorieToGo && recetteToGo) {
+                // go to recette
+                this.$router.push({name:"recette", params:{domaine: domaineToGo, categorie: categorieToGo, recette: recetteToGo}}).catch(()=>{})
+            }
+
         },
         reinit() {
             let date = new Date();
@@ -223,6 +270,7 @@ let admin = {
             this.lipides= null;
             this.proteines= null;
             this.ingredients= "";
+            this.ustensiles= "";
             this.etapes= "";
             this.variantes= "";
             this.remarques= "";
@@ -231,6 +279,79 @@ let admin = {
             this.tagsRecette= null;
             this.nouveauxTags="";
             this.date= `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
+        },
+        retrieveCategories(recetteAModifier) {            
+            return recetteAModifier.categories? CATEGORIES[recetteAModifier.domaine].filter(c => recetteAModifier.categories.includes(c.id)) : []
+        },
+        retrieveSousCategories(recetteAModifier) {            
+            return recetteAModifier.sousCategories? CATEGORIES[recetteAModifier.domaine].filter(c => recetteAModifier.categories.includes(c.id)).flatMap(c => c.sousCategories).filter(sc => recetteAModifier.sousCategories.includes(sc.id)) : []
+        },
+        retrieveImages(recetteAModifier) {
+            return recetteAModifier.images ? recetteAModifier.images.map(img => img.substring(img.lastIndexOf('/') + 1)).join("\n") : "";
+        },
+        retrieveTags(recetteAModifier) {
+            let tags = new Set();
+            RECETTES.filter(r => r.tags).flatMap(r => r.tags).forEach(t => tags.add(t));
+            return recetteAModifier.tags ? [...tags].sort().filter(t => recetteAModifier.tags.includes(t)) : [];
+        },
+        retrieveIngredients(recetteAModifier) {
+            if (!recetteAModifier.ingredients) return ""
+
+            return recetteAModifier.ingredients
+                    .map(i => 
+                        "" + i.nom
+                        + (i.quantite ? " " + i.quantite : "")
+                        + (i.unite ? " " + i.unite : "")
+                        + (i.note ? " (" + i.note + ")" : "")
+                    )
+                    .join("\n");
+        },
+        retrieveUstensiles(recetteAModifier) {
+            if (!recetteAModifier.ustensiles) return ""
+
+            return recetteAModifier.ustensiles
+                    .map(u => 
+                        "" + u.nom
+                        + (u.quantite ? " " + u.quantite : "")
+                        + (u.note ? " (" + u.note + ")" : "")
+                    )
+                    .join("\n");
+        },
+        retrieveEtapes(recetteAModifier) {
+            return recetteAModifier.etapes ? recetteAModifier.etapes.join("\n") : "";
+        },
+        retrieveVariantes(recetteAModifier) {
+            return recetteAModifier.variantes ? recetteAModifier.variantes.join("\n") : "";
+        },
+        retrieveRemarques(recetteAModifier) {
+            return recetteAModifier.remarques ? recetteAModifier.remarques.join("\n") : "";
+        },
+        retrieveInspirations(recetteAModifier) {
+            if (!recetteAModifier.inspirations) return ""
+
+            return recetteAModifier.inspirations
+                    .map(i => 
+                        "[" + i.nom + "]"
+                        + (i.url ? "(" + i.url + ")" : "")
+                        + (i.note ? " " + i.note : "")
+                    )
+                    .join("\n");
+        },
+        retrieveKcal(recetteAModifier) {
+            if (!recetteAModifier.apportNutritionelTotal) return null;
+            return recetteAModifier.apportNutritionelTotal.find(a => a.type === "kcal")?.quantite;
+        },
+        retrieveGlucides(recetteAModifier) {
+            if (!recetteAModifier.apportNutritionelTotal) return null;
+            return recetteAModifier.apportNutritionelTotal.find(a => a.type === "glucides")?.quantite;
+        },
+        retrieveLipides(recetteAModifier) {
+            if (!recetteAModifier.apportNutritionelTotal) return null;
+            return recetteAModifier.apportNutritionelTotal.find(a => a.type === "lipides")?.quantite;
+        },
+        retrieveProteines(recetteAModifier) {
+            if (!recetteAModifier.apportNutritionelTotal) return null;
+            return recetteAModifier.apportNutritionelTotal.find(a => a.type === "proteines")?.quantite;
         }
     }
 }

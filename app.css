@@ -62,6 +62,9 @@ button:focus {
     outline: inherit;
 }
 
+button::selection {
+    background-color: inherit;
+}
 
 * {
 	scrollbar-width: thin;

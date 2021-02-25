@@ -35,7 +35,7 @@ Vue.component("vignetteRecette", {
             this.$router.push({name:"recette", params:{domaine: this.domaine, categorie: this.categorie || this.categoriesRecette[0].nom, recette: this.recette.nom}}).catch(()=>{})
         },
 		getCategorieById(id) {
-			return this.categoriesFirebase[this.domaine].find(c => id === c.id);
+			return this.categoriesFirebase[this.domaine] ? this.categoriesFirebase[this.domaine].find(c => id === c.id) : [];
 		},
     }
 })

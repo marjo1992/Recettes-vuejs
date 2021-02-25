@@ -17,8 +17,8 @@ Vue.component("blocRecetteInfosAnnexes", {
                 </div>
                 <div v-for="apport in recette.apportNutritionelTotal" class="apportNutritionelsLigne">
                     <div class="apportType">{{apport.type}}</div>
-                    <div>{{apport.quantite * nbPortions / (recette.nbPortions) }} {{apport.unite}}</div>
-                    <div>{{apport.quantite / (recette.nbPortions)}} {{apport.unite}}</div>
+                    <div>{{(apport.quantite * nbPortions / (recette.nbPortions)).toFixed(1) }} {{apport.unite}}</div>
+                    <div>{{(apport.quantite / (recette.nbPortions)).toFixed(1)}} {{apport.unite}}</div>
                 </div>
             </div>
         </div>

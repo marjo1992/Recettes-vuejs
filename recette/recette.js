@@ -10,7 +10,7 @@ let recette = {
 		</div>
 		<div id="recette" v-if="recette">
 			<div id="central">
-				<h1>{{recette.nom}}</h1>
+				<h1>{{recette.nom}}<img v-if="estConnecte" id="iconeModifier" src="_ressources/images/modifier.png" @click="modifier"></h1>
 				<div id="categories">
 					<span v-for="categorie in categoriesRecette">{{categorie.nom}}</span>
 				</div>
@@ -50,10 +50,14 @@ let recette = {
         return {
 			nbPortions : null,
 			recettesFirebase : RECETTES,
-			categoriesFirebase: CATEGORIES
+			categoriesFirebase: CATEGORIES,
+			store: STORE
         }
     },
     computed: {
+		estConnecte() {
+			return this.store.estConnecte
+		},
 		categories() {
 			return this.categoriesFirebase[this.$route.params.domaine];
 		},
@@ -78,6 +82,10 @@ let recette = {
 			return {
 				backgroundImage: `url("${urlImg}")`
 			}
-		}
+		},
+        modifier() {
+			STORE.recetteAModifier = this.recette
+            this.$router.push({name:"admin"}).catch(()=>{})
+        },
 	}
 }

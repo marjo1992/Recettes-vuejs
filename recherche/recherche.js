@@ -36,20 +36,27 @@ let recherche = {
 			</div>
 		</div>
     </div>`,
+	data() {
+		return {
+			recettes: RECETTES
+		}
+	},
     computed: {
         resultatsRecettesCuisine() {
-            return this.getRecettesByTags(recettesCuisine);
+            return this.getRecettesByTags("Cuisine");
         },
         resultatsRecettesMaison() {
-            return this.getRecettesByTags(recettesMaison);
+            return this.getRecettesByTags("Maison");
         },
         resultatsRecettesCosmetique() {
-            return this.getRecettesByTags(recettesCosmetique);
+            return this.getRecettesByTags("Cosmetique");
         }
 	},
 	methods: {
-		getRecettesByTags(recettes) {
-			return recettes.filter(r => r.tags.find(t => t === this.$route.params.tag));
+		getRecettesByTags(domaine) {
+			return this.recettes
+			.filter(r => r.domaine === domaine)
+			.filter(r => r.tags.find(t => t === this.$route.params.tag));
 		}
 	}
 }
