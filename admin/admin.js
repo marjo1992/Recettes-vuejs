@@ -107,7 +107,7 @@ let admin = {
             lipides: recetteAModifier? this.retrieveLipides(recetteAModifier) : null,
             proteines: recetteAModifier? this.retrieveProteines(recetteAModifier) : null,
             ingredients: recetteAModifier? this.retrieveIngredients(recetteAModifier) : "",
-            ustensiles: recetteAModifier? this.retrieveUstensiles(recette) : "",
+            ustensiles: recetteAModifier? this.retrieveUstensiles(recetteAModifier) : "",
             etapes: recetteAModifier? this.retrieveEtapes(recetteAModifier) : "",
             variantes: recetteAModifier? this.retrieveVariantes(recetteAModifier) : "",
             remarques: recetteAModifier? this.retrieveRemarques(recetteAModifier) : "",

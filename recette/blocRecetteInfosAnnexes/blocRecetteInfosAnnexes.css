@@ -68,3 +68,8 @@ blocApportsNutritionels .apportType {
 #blocRecetteInfosAnnexes #inspirations .listeObject {
     align-items: flex-start;
 }
+
+#blocRecetteInfosAnnexes a {
+    color: var(--colorOrangeDark);
+    font-style: italic;
+}
