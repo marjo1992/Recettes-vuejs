@@ -141,9 +141,6 @@ let admin = {
             if (this.glucides) apportNutritionelTotal.push({type: "glucides", quantite: this.glucides, unite: "g"});
             if (this.proteines) apportNutritionelTotal.push({type: "proteines", quantite: this.proteines, unite: "g"});
             if (this.lipides) apportNutritionelTotal.push({type: "lipides", quantite: this.lipides, unite: "g"});
-            let regexIngredients = /^(\D+)( (\d+(?:\.\d+)?))?( ([^\d\(\)]+))?( \((.*)\))?$/;
-            let regexUstensiles = /^(\D+)( (\d+(?:\.\d+)?))?( \((.*)\))?$/;
-            let regexInspirations = /^\[(.*)\](\((.*)\))?( (.*))?/;
             let nouveauxTagsSplit = this.nouveauxTags.split(', ').filter(e => e)
             return {
                 domaine : this.domaineRecette,
@@ -159,34 +156,12 @@ let admin = {
                 tempsAttenteMin : this.tempsAttenteMin,
                 tempsCuissonMin : this.tempsCuissonMin,
                 apportNutritionelTotal: apportNutritionelTotal,
-                ingredients: this.ingredients.split('\n').filter(e => regexIngredients.test(e)).map(i => {
-                    let res = regexIngredients.exec(i);
-                    return {
-                        nom: res[1],
-                        quantite: res[3] || null,
-                        unite: res[5] || null,
-                        note: res[7] || null
-                    }
-                }),
-                ustensiles: this.ustensiles.split('\n').filter(e => regexUstensiles.test(e)).map(i => {
-                    let res = regexUstensiles.exec(i);
-                    return {
-                        nom: res[1],
-                        quantite: res[3] || null,
-                        note: res[5] || null
-                    }
-                }),
-                etapes : this.etapes.split('\n').filter(e => e),
-                variantes : this.variantes.split('\n').filter(e => e),
-                remarques : this.remarques.split('\n').filter(e => e),
-                inspirations : this.inspirations.split('\n').filter(e => regexInspirations.test(e)).map(i => {
-                    let res = regexInspirations.exec(i);
-                    return {
-                        nom: res[1],
-                        url: res[3] || null,
-                        note: res[5] || null
-                    }
-                })
+                ingredients:  this.extraireTableauxDesChamps(this.ingredients, this.extraireIngredient),
+                ustensiles: this.extraireTableauxDesChamps(this.ustensiles, this.extraireUstensile),
+                etapes : this.extraireTableauxDesChamps(this.etapes),
+                variantes : this.extraireTableauxDesChamps(this.variantes),
+                remarques : this.extraireTableauxDesChamps(this.remarques),
+                inspirations : this.extraireTableauxDesChamps(this.inspirations, this.extraireInspiration)
             }
         },
         resultat(){
@@ -194,6 +169,54 @@ let admin = {
         }
     },
     methods: {
+        extraireTableauxDesChamps(value, functionCreationObjet) {
+            let regexTitreTableau = /^# (.*)/;
+            return value.split('##')
+                .map(e => {
+                    tmp = [];
+                    e.split('\n')
+                        .forEach(ee => {
+                            if (ee.startsWith('#')) tmp.nom = regexTitreTableau.exec(ee)[1]
+                            else if (ee) tmp.push(functionCreationObjet ? functionCreationObjet(ee) : ee)
+                        });
+                    return tmp
+                })
+                .filter(e => e.length)
+        },
+        extraireInspiration(ligneInspiration) {
+            let regexInspirations = /^\[(.*)\](\((.*)\))?( (.*))?/;
+            if (regexInspirations.test(ligneInspiration)) {
+                let res = regexInspirations.exec(ligneInspiration);
+                return {
+                    nom: res[1],
+                    url: res[3] || null,
+                    note: res[5] || null
+                }
+            }
+        },
+        extraireIngredient(ligneIngredient) {
+            let regexIngredients = /^(\D+)( (\d+(?:\.\d+)?))?( ([^\d\(\)]+))?( \((.*)\))?$/;
+            if (regexIngredients.test(ligneIngredient)) {
+                let res = regexIngredients.exec(ligneIngredient);
+                return {
+                    nom: res[1],
+                    quantite: res[3] || null,
+                    unite: res[5] || null,
+                    note: res[7] || null
+                }
+            }
+        },
+        extraireUstensile(ligneUstensile) {
+            let regexUstensiles = /^(\D+)( (\d+(?:\.\d+)?))?( \((.*)\))?$/;
+            if (regexUstensiles.test(ligneUstensile)) {
+                let res = regexUstensiles.exec(ligneUstensile);
+                return {
+                    nom: res[1],
+                    quantite: res[3] || null,
+                    note: res[5] || null
+                }
+            }
+        },
         getTags(input) {
 			if (input.length < 2) { return [] }
 			return this.tags.filter(t => t.toLowerCase().includes(input.toLowerCase()))
@@ -296,46 +319,69 @@ let admin = {
         },
         retrieveIngredients(recetteAModifier) {
             if (!recetteAModifier.ingredients) return ""
-
             return recetteAModifier.ingredients
-                    .map(i => 
-                        "" + i.nom
-                        + (i.quantite ? " " + i.quantite : "")
-                        + (i.unite ? " " + i.unite : "")
-                        + (i.note ? " (" + i.note + ")" : "")
-                    )
-                    .join("\n");
+                    .map(t => 
+                        (t.nom ? `### ${t.nom}\n` : "") +
+                        Object.keys(t).filter(k => !isNaN(k)).map(k => t[k]).map(i =>
+                            "" + i.nom
+                            + (i.quantite ? ` ${i.quantite}` : "")
+                            + (i.unite ? ` ${i.unite}` : "")
+                            + (i.note ? ` (${i.note})` : "")
+                        )
+                        .join("\n")
+                    ).join("\n")
         },
         retrieveUstensiles(recetteAModifier) {
             if (!recetteAModifier.ustensiles) return ""
 
             return recetteAModifier.ustensiles
-                    .map(u => 
-                        "" + u.nom
-                        + (u.quantite ? " " + u.quantite : "")
-                        + (u.note ? " (" + u.note + ")" : "")
-                    )
-                    .join("\n");
+                    .map(t => 
+                        (t.nom ? `### ${t.nom}\n` : "") +
+                        Object.keys(t).filter(k => !isNaN(k)).map(k => t[k]).map(u =>
+                            "" + u.nom
+                            + (u.quantite ? ` ${u.quantite}` : "")
+                            + (u.note ? ` (${u.note})` : "")
+                        )
+                        .join("\n")
+                    ).join("\n")
         },
         retrieveEtapes(recetteAModifier) {
-            return recetteAModifier.etapes ? recetteAModifier.etapes.join("\n") : "";
+            if (!recetteAModifier.etapes) return ""
+            return recetteAModifier.etapes
+                    .map(t => 
+                        (t.nom ? `### ${t.nom}\n` : "") +
+                        Object.keys(t).filter(k => !isNaN(k)).map(k => t[k]).join("\n")
+                    ).join("\n")
         },
         retrieveVariantes(recetteAModifier) {
-            return recetteAModifier.variantes ? recetteAModifier.variantes.join("\n") : "";
+            if (!recetteAModifier.variantes) return ""
+            return recetteAModifier.variantes
+                    .map(t => 
+                        (t.nom ? `### ${t.nom}\n` : "") +
+                        Object.keys(t).filter(k => !isNaN(k)).map(k => t[k]).join("\n")
+                    ).join("\n")
         },
         retrieveRemarques(recetteAModifier) {
-            return recetteAModifier.remarques ? recetteAModifier.remarques.join("\n") : "";
+            if (!recetteAModifier.remarques) return ""
+            return recetteAModifier.remarques
+                    .map(t => 
+                        (t.nom ? `### ${t.nom}\n` : "") +
+                        Object.keys(t).filter(k => !isNaN(k)).map(k => t[k]).join("\n")
+                    ).join("\n")
         },
         retrieveInspirations(recetteAModifier) {
             if (!recetteAModifier.inspirations) return ""
 
             return recetteAModifier.inspirations
-                    .map(i => 
-                        "[" + i.nom + "]"
-                        + (i.url ? "(" + i.url + ")" : "")
-                        + (i.note ? " " + i.note : "")
-                    )
-                    .join("\n");
+                    .map(t => 
+                        (t.nom ? `### ${t.nom}\n` : "") +
+                        Object.keys(t).filter(k => !isNaN(k)).map(k => t[k]).map(i =>
+                            "[" + i.nom + "]"
+                            + (i.url ? `(${i.url})` : "")
+                            + (i.note ? ` ${i.note}` : "")
+                        )
+                        .join("\n")
+                    ).join("\n")
         },
         retrieveKcal(recetteAModifier) {
             if (!recetteAModifier.apportNutritionelTotal) return null;

@@ -19,20 +19,35 @@ let recette = {
 					<div id="blocEtapesVariantesRemarques">
 						<div id="etape">
 							<h2>Etapes</h2>
-							<div class="listeObject">
-								<span v-for="etape in recette.etapes"><span class="icon-etape"></span>{{etape}}</span>
+							<div>
+								<span v-for="etapeGroupe in recette.etapes" class="listeObject">
+									<h3 v-if="etapeGroupe.nom">{{etapeGroupe.nom}}</h3>
+									<span v-for="etape in getListeElem(etapeGroupe)">
+									<span class="icon-etape"></span>{{etape}}
+									</span>
+								</span>
 							</div>
 						</div>
 						<div v-if="recette.variantes">
 							<h2>Variantes</h2>
-							<div class="listeObject">
-								<span v-for="variante in recette.variantes"><span class="icon-variante"></span>{{variante}}</span>
+							<div>
+								<span v-for="varianteGroupe in recette.variantes" class="listeObject">
+									<h3 v-if="varianteGroupe.nom">{{varianteGroupe.nom}}</h3>
+									<span v-for="variante in getListeElem(varianteGroupe)">
+									<span class="icon-variante"></span>{{variante}}
+									</span>
+								</span>
 							</div>
 						</div>
 						<div v-if="recette.remarques">
 							<h2>Remarques</h2>
-							<div class="listeObject">
-								<span v-for="remarque in recette.remarques"><span class="icon-remarque"></span>{{remarque}}</span>
+							<div>
+								<span v-for="remarqueGroupe in recette.remarques" class="listeObject">
+									<h3 v-if="remarqueGroupe.nom">{{remarqueGroupe.nom}}</h3>
+									<span v-for="remarque in getListeElem(remarqueGroupe)">
+									<span class="icon-remarque"></span>{{remarque}}
+									</span>
+								</span>
 							</div>
 						</div>
 					</div>
@@ -87,5 +102,8 @@ let recette = {
 			STORE.recetteAModifier = this.recette
             this.$router.push({name:"admin"}).catch(()=>{})
         },
+        getListeElem(elemGroupe) {
+            return Object.keys(elemGroupe).filter(k => !isNaN(k)).map(k => elemGroupe[k])
+        }
 	}
 }

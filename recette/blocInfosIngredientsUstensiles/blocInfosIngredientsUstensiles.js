@@ -17,16 +17,24 @@ Vue.component("blocInfosIngredientsUstensiles", {
         </div>
         <div id="blocIngredients">
             <h2>Ingrédients</h2>
-            <div class="listeObject">
-                <span v-for="ingredient in recette.ingredients">
-                    <span class="icon-ingredient"></span><span v-if="ingredient.quantite">{{ingredient.quantite * nbPortionsInput / nbPotionsInitial}} </span><span v-if="ingredient.unite">{{ingredient.unite}} </span>{{ingredient.nom}}<span v-if="ingredient.note"> ({{ingredient.note}})</span>
+            <div>
+                <span v-for="ingredientGroupe in recette.ingredients" class="listeObject">
+                    <h3 v-if="ingredientGroupe.nom">{{ingredientGroupe.nom}}</h3>
+                    <span v-for="ingredient in getListeElem(ingredientGroupe)">
+                        <span class="icon-ingredient"></span><span v-if="ingredient.quantite">{{ingredient.quantite * nbPortionsInput / nbPotionsInitial}} </span><span v-if="ingredient.unite">{{ingredient.unite}} </span>{{ingredient.nom}}<span v-if="ingredient.note"> ({{ingredient.note}})</span>
+                    </span>
                 </span>
             </div>
         </div>
         <div v-if="recette.ustensiles" id="blocUstensiles">
             <h2>Ustensiles</h2>
-            <div class="listeObject">
-                <span v-for="ustensile in recette.ustensiles"><span class="icon-ustensile"></span><span v-if="ustensile.quantite">{{ustensile.quantite}} </span>{{ustensile.nom}}<span v-if="ustensile.note"> ({{ustensile.note}})</span></span>
+            <div>
+                <span v-for="ustensileGroupe in recette.ustensiles" class="listeObject">
+                    <h3 v-if="ustensileGroupe.nom">{{ustensileGroupe.nom}}</h3>
+                    <span v-for="ustensile in getListeElem(ustensileGroupe)">
+                        <span class="icon-ustensile"></span><span v-if="ustensile.quantite">{{ustensile.quantite}} </span>{{ustensile.nom}}<span v-if="ustensile.note"> ({{ustensile.note}})</span>
+                    </span>
+                </span>
             </div>
         </div>
     </div>`,
@@ -41,6 +49,9 @@ Vue.component("blocInfosIngredientsUstensiles", {
     methods: {
         dispatchInput(event) {
             this.$emit("input", event)
+        },
+        getListeElem(elemGroupe) {
+            return Object.keys(elemGroupe).filter(k => !isNaN(k)).map(k => elemGroupe[k])
         }
     }
 })

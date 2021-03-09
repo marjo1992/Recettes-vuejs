@@ -24,8 +24,13 @@ Vue.component("blocRecetteInfosAnnexes", {
         </div>
         <div id="inspirations">
             <h2>Inspirations</h2>
-            <div class="listeObject">
-                <span v-for="inspiration in recette.inspirations"><span class="icon-inspiration"></span><a :href="inspiration.url" target="_blank">{{inspiration.nom}}</a> {{inspiration.note}}</span>
+            <div>
+                <span v-for="inspirationGroupe in recette.inspirations" class="listeObject">
+                    <h3 v-if="inspirationGroupe.nom">{{inspirationGroupe.nom}}</h3>
+                    <span v-for="inspiration in getListeElem(inspirationGroupe)">
+                        <span class="icon-inspiration"></span><a :href="inspiration.url" target="_blank">{{inspiration.nom}}</a> {{inspiration.note}}
+                    </span>
+                </span>
             </div>
         </div>		
         </div>
@@ -33,5 +38,10 @@ Vue.component("blocRecetteInfosAnnexes", {
     data() {
         return {
         }
-    }
+    },
+	methods: {
+        getListeElem(elemGroupe) {
+            return Object.keys(elemGroupe).filter(k => !isNaN(k)).map(k => elemGroupe[k])
+        }
+	}
 })
