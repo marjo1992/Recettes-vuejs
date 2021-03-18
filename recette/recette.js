@@ -51,9 +51,9 @@ let recette = {
 							</div>
 						</div>
 					</div>
-					<div id="blocPhotos" v-if="recette.images && recette.images.length">
+					<div id="blocPhotos" v-if="recette.urlsImagesStock && recette.urlsImagesStock.length">
 						<div id="photosRecette" >
-							<carousselPhotos :photosUrl="recette.images"></carousselPhotos>
+							<carousselPhotos :photosUrl="recette.urlsImagesStock"></carousselPhotos>
 						</div>
 					</div>
 				</div>

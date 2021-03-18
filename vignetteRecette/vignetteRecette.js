@@ -21,8 +21,8 @@ Vue.component("vignetteRecette", {
     computed: {
         style() {
             let style = {};
-            if (this.recette.images && this.recette.images.length) {
-                style.backgroundImage = `url("${this.recette.images[0]}")`;
+            if (this.recette.urlsImagesStock && this.recette.urlsImagesStock.length) {
+                style.backgroundImage = `url("${this.recette.urlsImagesStock[0]}")`;
             }
             return style;
         },

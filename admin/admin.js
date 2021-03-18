@@ -57,7 +57,7 @@ let admin = {
                     <input v-model="nouveauxTags" placeholder="Ex: tag 1, tag 2">
                 </div>
             </div>
-            <div><span class="nomChamp">Images</span><div class="champ"><TextareaAutosize v-model="images"/></div></div>
+            <div><span class="nomChamp">Fichier Image</span><div class="champ"><input type="file" multiple v-on:change="enregistrePathImage" ref="fichierImageInput" accept="image/*"></div></div>
             <div><span class="nomChamp">Nombre de portion</span><div class="champ"><inputNumber v-model="nbPortions" min="1"></inputNumber></div></div>
             <div><span class="nomChamp">Définition de portion</span><div class="champ"><input v-model="defPortion" placeholder="Ex: petit pot"></div></div>
             <div><span class="nomChamp">Temp de cuisson (en min)</span><div class="champ"><input type="number" v-model="tempsCuissonMin"></div></div>
@@ -96,7 +96,8 @@ let admin = {
             mapCategoriesParDomaine: CATEGORIES,
             categories: recetteAModifier? this.retrieveCategories(recetteAModifier) : [],
             sousCategories: recetteAModifier? this.retrieveSousCategories(recetteAModifier) : [],
-            images: recetteAModifier? this.retrieveImages(recetteAModifier) : "",
+            refImages : [],
+            ancienneRefImages : recetteAModifier? this.retrieveRefImages(recetteAModifier) : [],
             nbPortions: recetteAModifier? recetteAModifier.nbPortions : 1,
             defPortion: recetteAModifier? recetteAModifier.defPortion : "",
             tempsCuissonMin: recetteAModifier? (recetteAModifier.tempsCuissonMin ? recetteAModifier.tempsCuissonMin : null) : null,
@@ -148,7 +149,7 @@ let admin = {
                 dateAjout : this.date,
                 categories : this.categories.map(c => c.id),
                 sousCategories : this.sousCategories.map(c => c.id),
-                images: this.images.split('\n').filter(e => e).map(i => "_sources/" + (this.domaineRecette ? (this.domaineRecette.toLowerCase()) : "") + "/images/" + i),
+                refImages: this.refImages.concat(this.ancienneRefImages).sort(),
                 tags: [...(this.tagsRecette||[]), ...nouveauxTagsSplit],
                 nbPortions: this.nbPortions,
                 defPortion: this.defPortion,
@@ -247,12 +248,15 @@ let admin = {
                 // An error happened.
               });
         },
-        generate() {
+        async generate() {
+            await this.enregistreImage()
+
             if (STORE.recetteAModifier) {
                 firebase.database().ref('recettes/' + STORE.recetteAModifier.uuid).remove()
             }
             var postListRef = firebase.database().ref('recettes');
             var newPostRef = postListRef.push();
+            
             newPostRef.set(this.recette, 
                 (error) => {
                 if (error) {
@@ -282,7 +286,8 @@ let admin = {
             this.domaineRecette = "";
             this.categories= [];
             this.sousCategories= [];
-            this.images= "";
+            this.ancienneRefImages= [];
+            this.refImages= [];
             this.nbPortions= 1;
             this.defPortion= "";
             this.tempsCuissonMin= null;
@@ -309,8 +314,8 @@ let admin = {
         retrieveSousCategories(recetteAModifier) {            
             return recetteAModifier.sousCategories? CATEGORIES[recetteAModifier.domaine].filter(c => recetteAModifier.categories.includes(c.id)).flatMap(c => c.sousCategories).filter(sc => recetteAModifier.sousCategories.includes(sc.id)) : []
         },
-        retrieveImages(recetteAModifier) {
-            return recetteAModifier.images ? recetteAModifier.images.map(img => img.substring(img.lastIndexOf('/') + 1)).join("\n") : "";
+        retrieveRefImages(recetteAModifier) {
+            return recetteAModifier.refImages || [];
         },
         retrieveTags(recetteAModifier) {
             let tags = new Set();
@@ -398,6 +403,82 @@ let admin = {
         retrieveProteines(recetteAModifier) {
             if (!recetteAModifier.apportNutritionelTotal) return null;
             return recetteAModifier.apportNutritionelTotal.find(a => a.type === "proteines")?.quantite;
-        }
+        },
+        async enregistreImage() {
+
+            // Create a root reference
+            var storageRef = firebase.storage().ref();
+
+            // Create the file metadata
+            var metadata = {
+                contentType: 'image/jpg'
+            };
+
+            await Promise.all([...this.$refs.fichierImageInput.files].map(async (fichier, i) => {
+
+                let imageRedimensionnee = await this.redimensionnerImage(fichier, i)
+
+                let uploadTask = storageRef
+                    .child(this.generateRefImage(imageRedimensionnee, i))
+                    .put(imageRedimensionnee, metadata)
+                uploadTask.on(
+                        firebase.storage.TaskEvent.STATE_CHANGED,
+                        (snapshot) => {}, 
+                        (error) => { console.log(error) }, 
+                        () => {
+                            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                                console.log('File available at', downloadURL);
+                            });
+                        }
+                    );
+            }))
+
+        },
+        enregistrePathImage() {
+            this.refImages.length = 0;
+            [...this.$refs.fichierImageInput.files].forEach((fichier, i) => {
+                this.refImages.push(this.generateRefImage(fichier, i))
+            })
+        },
+        generateRefImage(fichier, i) {
+            let nomFichier = this.generateNomImage(i)
+            //let extension = fichier.name.substring(fichier.name.lastIndexOf('.') + 1)
+            return  `images/${this.domaineRecette}/${nomFichier}.jpg`
+        },
+        generateNomImage(i) {
+            // Formate le nom du fichier : nom de la recette en minuscule et sans accents, avec les espaces remplacés par des underscore
+            let nomFichier = this.nom.toLowerCase().replaceAll(" ", "_").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            return  `${nomFichier}_${i+this.ancienneRefImages.length}`
+        },
+        redimensionnerImage(fichierImage, i) {
+			return new Promise((resolve, reject) => {
+				let reader = new FileReader();
+				let canvas = document.createElement('canvas');
+
+
+
+				reader.onload = _ => {
+					let image = new Image();
+					image.onload = _ => {
+                        let r = 400 / Math.max(image.width, image.height) // 400 taille max image (hauteur et longueur)
+                        let newWidth = image.width * r
+                        let newHeight = image.height * r
+                        canvas.width = newWidth;
+                        canvas.height = newHeight;
+
+						canvas.getContext('2d').drawImage(image, 0, 0, newWidth, newHeight);
+						var dataUrl = canvas.toDataURL('image/jpg');
+						fetch(dataUrl)
+							.then(res => res.blob())
+							.then(blob => {
+								let returnFile = new File([blob], this.generateNomImage(i), {type: 'image/jpg'});
+								resolve(returnFile);
+							})
+					}
+					image.src = reader.result;
+				}
+				reader.readAsDataURL(fichierImage);
+			});
+		}
     }
 }

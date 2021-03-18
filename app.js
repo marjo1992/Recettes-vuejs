@@ -32,11 +32,23 @@ let STORE = {
 	recetteAModifier : null
 };
 
-firebase.database().ref('recettes').on('value', res => {
+const storageRef = firebase.storage().ref();
+firebase.database().ref('recettes').on('value', async res => {
 	RECETTES.length = 0;
 	for (key in res.val()) {
 		let recette = res.val()[key];
 		recette.uuid = key;
+		if (recette.refImages) {
+			recette.urlsImagesStock = []
+			for (refImage of recette.refImages) {
+				try {
+					let url = await storageRef.child(refImage).getDownloadURL()
+					recette.urlsImagesStock.push(url)
+				} catch (e) {
+					console.log ()
+				}
+			}
+		}
 		RECETTES.push(recette);
 	}
 });
