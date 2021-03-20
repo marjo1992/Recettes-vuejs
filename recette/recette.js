@@ -10,7 +10,7 @@ let recette = {
 		</div>
 		<div id="recette" v-if="recette">
 			<div id="central">
-				<h1>{{recette.nom}}<img v-if="estConnecte" id="iconeModifier" src="_ressources/images/modifier.png" @click="modifier"></h1>
+				<h1>{{recette.nom}}<span v-if="estConnecte" id="iconeModifier" class="icon-modifier" @click="modifier"></span></h1>
 				<div id="categories">
 					<span v-for="categorie in categoriesRecette">{{categorie.nom}}</span>
 				</div>

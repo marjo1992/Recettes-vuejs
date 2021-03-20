@@ -29,6 +29,11 @@
     text-shadow: var(--textShadowLittle);
 }
 
+#navbar #iconeAjouter {
+    cursor: pointer;
+    color: var(--colorTitle);
+}
+
 #titreSite {
     font-family: titleFont;
     width: var(--titreSiteWidth);
