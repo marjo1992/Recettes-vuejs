@@ -10,7 +10,9 @@ Vue.component("navbar", {
 			<router-link to="/Articles" class="button">Articles</router-link>
 			<div v-if="estConnecte"><span id="iconeAjouter" class="icon-ajouter" @click="ajouter"></span></div>
 		</div>
-		<searchBar></searchBar>
+		<div id="searchBarContainer">
+			<searchBar></searchBar>
+		</div>
 	</div>`
 	,
     data() {

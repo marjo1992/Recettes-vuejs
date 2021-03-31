@@ -22,6 +22,12 @@
     align-items: stretch;
 }
 
+@media(max-width: 600px) {
+    #menuGauche {
+        display: none;
+    }
+}
+
 #categorie h1 {
 	display: flex;
     flex-direction: row;

@@ -1,5 +1,5 @@
 let recette = {
-    template : `<div>
+    template : `<div id="recetteView">
 		<div id="menuGauche">
 			<categorieMenu
 				v-for="categorie in categories"

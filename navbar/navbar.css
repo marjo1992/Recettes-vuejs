@@ -1,19 +1,28 @@
+@media(max-width: 600px) {
+    #navbar {
+        flex-direction: column;
+        --domainesWidth: 95%;
+        --titreSiteWidth: auto;
+        --searchBarWidth: auto;
+    }
+}
 
-
-:root {
-    --domainesWidth: 35vw;
-    --titreSiteWidth: calc(calc(100vw - var(--domainesWidth)) * 0.5);
-    --searchBarWidth: var(--titreSiteWidth);
+@media(min-width: 601px) {
+    #navbar {
+        flex-direction: row;
+        --domainesWidth: 35vw;
+        --titreSiteWidth: calc(calc(100vw - var(--domainesWidth)) * 0.5);
+        --searchBarWidth: var(--titreSiteWidth);
+    }
 }
 
 #navbar {
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     background-color: var(--colorGreenLight);
     height: calc(var(--navbarHeight) - 3vh);
-    font-size: 2vw;
+    font-size: 1em;
     width: 99vw;
     padding: 1.5vh 0.5vw;
 }
@@ -24,7 +33,7 @@
     width: var(--domainesWidth);
     justify-content: space-between;
     color: var(--colorGreenDark);
-    font-size: 2vw;
+    font-size: 2em;
     font-weight: bold;
     text-shadow: var(--textShadowLittle);
 }
@@ -37,12 +46,12 @@
 #titreSite {
     font-family: titleFont;
     width: var(--titreSiteWidth);
-    font-size: 2vw;
+    font-size: 2em;
     font-weight: bold;
     text-shadow: var(--textShadowLittle);
     color: var(--colorTitle);
 }
 
-#searchBar {
+#searchBarContainer {
     width: var(--searchBarWidth);
 }

@@ -26,12 +26,12 @@
 
 #article h2 {
     color: var(--colorOrangeDark);
-    font-size: 1.5vw;
+    font-size: 1.5em;
 }
 
 #article h3 {
     color: var(--colorGreenDark);
-    font-size: 1.25vw;
+    font-size: 1.25em;
 }
 
 #article #central {

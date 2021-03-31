@@ -4,7 +4,7 @@
     box-shadow: var(--vignetteBoxShadowSize) var(--colorBlueLight);
     color: var(--colorBlueDark);
     margin: 0.7vh 0vw;
-    font-size: 1.3vw;
+    font-size: 1.25em;
     flex-grow: 1;
     width: auto;
     opacity: 0.6;
