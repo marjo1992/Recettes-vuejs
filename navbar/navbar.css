@@ -1,36 +1,36 @@
 @media(max-width: 600px) {
     #navbar {
         flex-direction: column;
-        --domainesWidth: 95%;
-        --titreSiteWidth: auto;
-        --searchBarWidth: auto;
+        padding: 0.5vh 0.5vw;
+    }
+    #navbar #domaines {
+        width: 95%;
     }
 }
 
 @media(min-width: 601px) {
     #navbar {
         flex-direction: row;
-        --domainesWidth: 35vw;
-        --titreSiteWidth: calc(calc(100vw - var(--domainesWidth)) * 0.5);
-        --searchBarWidth: var(--titreSiteWidth);
+        justify-content: stretch;
+        padding: 1.5vh 0.5vw;
     }
 }
 
 #navbar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     background-color: var(--colorGreenLight);
     height: calc(var(--navbarHeight) - 3vh);
     font-size: 1em;
     width: 99vw;
-    padding: 1.5vh 0.5vw;
 }
 
 #navbar #domaines {
     display: flex;
     flex-direction: row;
-    width: var(--domainesWidth);
+    flex-basis: 0;
+    flex-grow: 1.2;
     justify-content: space-between;
     color: var(--colorGreenDark);
     font-size: 2em;
@@ -45,13 +45,18 @@
 
 #titreSite {
     font-family: titleFont;
-    width: var(--titreSiteWidth);
     font-size: 2em;
     font-weight: bold;
     text-shadow: var(--textShadowLittle);
     color: var(--colorTitle);
+    flex-basis: 0;
+    flex-grow: 1;
 }
 
 #searchBarContainer {
-    width: var(--searchBarWidth);
+    flex-basis: 0;
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }

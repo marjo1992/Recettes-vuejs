@@ -1,12 +1,12 @@
 @media(max-width: 600px) {
     #searchBar {
-        --autocompleteWidth: 30vw;
+        --autocompleteWidth: 40vw;
     }
 }
 
 @media(min-width: 601px) {
     #searchBar {
-        --autocompleteWidth: 13vw;
+        --autocompleteWidth: 17vw;
     }
 }
 
@@ -15,7 +15,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    font-size: 0.625em;
+    font-size: 1.3em;
     font-family: inherit;
 }
 
@@ -40,7 +40,7 @@
 	background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+");
 	background-repeat: no-repeat;
     background-position: 95%;
-    font-size: 2em;
+    font-size: inherit;
     font-family: inherit;
     opacity: 0.9;
     background-size: contain;
@@ -58,6 +58,7 @@
     background: white;
     border-radius: 10px;
     color: seagreen;
+    
 }
 
 .autocomplete-result {

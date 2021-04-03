@@ -110,8 +110,9 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2em;
     text-shadow: var(--textShadow);
+    font-size: 2em;
+    text-align: center;
     margin: 0;
 }
 
@@ -119,8 +120,18 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     margin: 5vh 0 2vh 0;
     font-size: 1.25em;
+}
+
+h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1em;
+    color: var(--colorOrangeDark);
 }
 
 #central {

@@ -26,7 +26,7 @@ Vue.component("searchBar", {
 			let objetsPourRechercheParNomRecette = this.getObjetsPourRechercheParNomRecetteParDomaine(this.recettesFirebase)
 
 			let tags = new Set();
-			this.recettesFirebase.flatMap(r => r.tags).forEach(t => tags.add(t));
+			this.recettesFirebase.filter(r => r.tags).flatMap(r => r.tags).forEach(t => tags.add(t));
 	
 			let objetsPourRechercheParTag = [...tags].map(t => ({
 				type:"tag",
