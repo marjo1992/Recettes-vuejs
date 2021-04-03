@@ -1,3 +1,9 @@
+if ('serviceWorker' in navigator) {
+	window.addEventListener('load', () => {
+		navigator.serviceWorker.register('/recettes/serviceworker.js', {scope: '/recettes/'});
+	});
+}
+
 const router = new VueRouter({
 	routes: [
 		{path: '/', component: accueil, name:"accueil"},
