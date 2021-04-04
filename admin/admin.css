@@ -1,15 +1,72 @@
+@media(max-width: 600px) {
+        
+    :root {
+        --inputWidth: 75vw;
+        --inputSelectWidth: 76vw;
+        --inputNumbertWidth: 10vw;
+    }
+
+    #admin {
+        flex-direction: column;
+        padding: 4vh;
+        font-size: 1.33em;
+    }
+
+    #admin #affichage {
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+    
+    #admin .formulaire {
+        border-top-right-radius: 20px;
+        border-top-left-radius: 20px;
+    }
+    
+    #admin .formulaire>div {
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5vh;
+    }
+}
+
+@media(min-width: 601px) {
+    
+    :root {
+        --inputWidth: 13vw;
+        --inputSelectWidth: 13.5vw;
+        --inputNumbertWidth: 3vw;
+    }
+
+    #admin {
+        flex-direction: row;
+        padding: 4vh 15vw;
+    }
+
+    #admin #affichage {
+        overflow-y: auto;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+    
+    #admin .formulaire {
+        overflow-y: auto;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+    
+    #admin .formulaire>div {
+        flex-direction: row;
+    }
+}
+
 :root {
     --contentAdminHeight: calc(92vh - var(--navbarHeight));
 }
 
 #admin {
     display:flex;
-    flex-direction: row;
     height: var(--contentAdminHeight);
-    margin: 4vh 15vw;
-    border-radius: 20px;
-    background-color: var(--colorOrangeLight);
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 #admin #connexion {
@@ -18,6 +75,7 @@
     justify-content: center;
     background-color: darkslategray;
     width: 100%;
+    border-radius: 20px;
 }
 
 
@@ -33,6 +91,7 @@
     flex-basis: inherit;
     padding-bottom: 5vh;
     color: white;
+    background-color: inherit;
 }
 
 #admin #erreurs {
@@ -41,11 +100,11 @@
 }
 
 #admin .formulaire {
+    background-color: var(--colorOrangeLight);
     display:flex;
     flex-direction: column;
     flex-grow: 1;
     flex-basis: 0;
-    overflow-y: auto;
     padding: 1vh 1vw;
 }
 
@@ -59,7 +118,6 @@
     background-color: darkslategray;
     color: var(--colorTitle);
     padding: 2vh 1vw;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
 }
@@ -82,7 +140,6 @@
 
 #admin .formulaire>div {
     display:flex;
-    flex-direction: row;
     margin-top: 0.5vh;
 }
 #admin .formulaire .champ {
@@ -111,7 +168,7 @@
 
 #admin input, #admin textarea, #admin select {
     display: flex;
-    width: 13vw;
+    width: var(--inputWidth);
     font-family: inherit;
     font-size: inherit;
     letter-spacing: 0.75px;
@@ -121,7 +178,7 @@
     padding: 0 0.25vw;
 }
 #admin select {
-    width: 13.5vw;
+    width: var(--inputSelectWidth);
 }
 
 #admin input:focus, #admin textarea:focus, #admin select:focus {
@@ -129,5 +186,5 @@
 }
 
 #admin .champ input[type=number]{
-    width: 3vw;
+    width: var(--inputNumbertWidth);
 }
