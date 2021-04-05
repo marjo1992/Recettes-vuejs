@@ -51,7 +51,7 @@ firebase.database().ref('recettes').on('value', async res => {
 					let url = await storageRef.child(refImage).getDownloadURL()
 					recette.urlsImagesStock.push(url)
 				} catch (e) {
-					console.log ()
+					console.log()
 				}
 			}
 		}

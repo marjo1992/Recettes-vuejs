@@ -252,27 +252,21 @@ let admin = {
             await this.enregistreImage()
 
             if (STORE.recetteAModifier) {
-                firebase.database().ref('recettes/' + STORE.recetteAModifier.uuid).remove()
-            }
-            var postListRef = firebase.database().ref('recettes');
-            var newPostRef = postListRef.push();
-            
-            newPostRef.set(this.recette, 
-                (error) => {
-                if (error) {
-                  // The write failed...
-                } else {
-                    if (STORE.recetteAModifier) {
-                        firebase.database().ref('recettes/' + STORE.recetteAModifier.uuid).remove()
+                var update = {};
+                update[`/recettes/${STORE.recetteAModifier.uuid}`] = this.recette
+                firebase.database().ref().update(update, error => {
+                    if (!error) {
+                        STORE.recetteAModifier = null
                     }
-                }
-              });
-
+                })
+            } else {
+                firebase.database().ref('recettes').push().set(this.recette)  
+            }
+            
             let domaineToGo = this.domaineRecette;
             let categorieToGo = this.categories[0].nom;
             let recetteToGo = this.nom;
 
-            STORE.recetteAModifier = null
             this.reinit()
 
             if (domaineToGo && categorieToGo && recetteToGo) {
