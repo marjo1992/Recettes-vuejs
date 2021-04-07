@@ -86,4 +86,5 @@ blocApportsNutritionels .apportType {
 #blocRecetteInfosAnnexes a {
     color: var(--colorOrangeDark);
     font-style: italic;
+	cursor: pointer;
 }

@@ -4,6 +4,12 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="theme-color" content="#d8eac5" />
+	<meta property="og:url"           content="https://pinkcactus.freeboxos.fr/recettes/index.html#/" />
+	<meta property="og:type"          content="website" />
+	<meta property="og:title"         content="Les Recettes de Marjolaine" />
+	<meta property="og:description"   content="" />
+	<meta property="og:image"         content="./_ressources/images/favicon.png" />
+
 	<title>Les Recettes de Marjolaine</title>
 	<link rel="icon" href="./_ressources/images/favicon.png" />
 
@@ -66,12 +72,15 @@
 	<script src="./categorieMenu/categorieMenu.js"></script>
 	<script src="./inputNumber/inputNumber.js"></script>
 	<script src="./carousselPhotos/carousselPhotos.js"></script>
+
 </head>
 <body>
+	<div id="fb-root"></div>
 	<div id="app">
 		<navbar></navbar>
 		<router-view>
 	</div>
 </body>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v10.0" nonce="lzr1bxR5"></script>
 <script src="./app.js"></script>
 </html>
