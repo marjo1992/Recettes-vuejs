@@ -83,10 +83,12 @@ let recette = {
 			return this.recette.categories.map(this.getCategorieById);
 		},
 		recette() {
-			return this.recettesFirebase
+			let recette = this.recettesFirebase
 				.filter(r => r.domaine === this.$route.params.domaine)
 				.filter(r => r.categories.find(c => c === this.categorieSelected.id))
 				.find(r => r.nom === this.$route.params.recette);
+			this.changeMeta(recette)
+			return recette;
 		}
 	},
 	methods: {
@@ -104,6 +106,13 @@ let recette = {
         },
         getListeElem(elemGroupe) {
             return Object.keys(elemGroupe).filter(k => !isNaN(k)).map(k => elemGroupe[k])
-        }
+        },
+		changeMeta(recette) {
+			if (!recette) return
+			document.querySelector('[property="og:title"]').setAttribute('content', recette.nom)
+			document.querySelector('[property="og:description"]').setAttribute('content', "")
+			document.querySelector('[property="og:image"]').setAttribute('content', recette.urlsImagesStock && recette.urlsImagesStock[0])
+			document.querySelector('[property="og:url"]').setAttribute('content', window.location.href)
+		}
 	}
 }

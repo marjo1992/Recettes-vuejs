@@ -37,16 +37,8 @@ Vue.component("blocRecetteInfosAnnexes", {
             <h2>Partage</h2>
             <div>
                 <a><span class="icon-partager" v-if="displayShare" @click="partager"></span></a>
-                <span class="fb-share-button" :data-href="urlShare" data-layout="button" data-size="small">
-                    <a target="_blank" :href="fbUrl" class="fb-xfbml-parse-ignore">
-                        <span class="icon-facebook"></span>
-                    </a>
-                </span>
-                <a class="twitter-share-button"
-                    :href="twitterUrl"
-                    data-size="large">
-                    <span class="icon-twitter"></span>
-                </a>
+                <a :href="fbUrl" target="_blank"><span class="icon-facebook"></span></a>
+                <a :href="twitterUrl" data-size="large" target="_blank"><span class="icon-twitter"></span></a>
             </div>
         </div>
     </div>`,
