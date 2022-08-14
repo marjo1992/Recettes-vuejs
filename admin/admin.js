@@ -19,11 +19,11 @@ let admin = {
             </form>
         </div>
         <div class="formulaire" v-else >
-            <div><span class="nomChamp">Nom</span><div class="champ"><input v-model="nom"></div></div>
+            <div><span class="nomChamp">Nom</span><div class="champ"><input v-model="formRecette.nom"></div></div>
             <div>
                 <span class="nomChamp">Domaine</span>
                 <div class="champ" >
-                    <select v-model="domaineRecette">
+                    <select v-model="formRecette.domaineRecette">
                         <option disabled value="">Choisissez</option>
                         <option v-for="domaine in domaines">{{domaine}}</option>
                     </select>
@@ -32,7 +32,7 @@ let admin = {
             <div>
                 <span class="nomChamp">Categories</span>
                 <div class="champ">
-                    <select v-model="categories" multiple>
+                    <select v-model="formRecette.categories" multiple>
                         <option v-for="categorie in categoriesDuDomaine" :value="categorie">{{categorie.nom}}</option>
                     </select>
                 </div>
@@ -40,7 +40,7 @@ let admin = {
             <div>
                 <span class="nomChamp">Sous-categories</span>
                 <div class="champ">
-                    <vue-multiselect v-model="sousCategories" :options="categories" :multiple="true"
+                    <vue-multiselect v-model="formRecette.sousCategories" :options="formRecette.categories" :multiple="true"
                         group-values="sousCategories" group-label="nom" :group-select="true" 
                         track-by="id" label="nom">
                     </vue-multiselect>
@@ -49,32 +49,32 @@ let admin = {
             <div>
                 <span class="nomChamp">Tags</span>
                 <div class="champ">
-                    <vue-multiselect v-model="tagsRecette" :options="tags" :multiple="true"
+                    <vue-multiselect v-model="formRecette.tagsRecette" :options="tags" :multiple="true"
                             :close-on-select="false" :clear-on-select="false" :preserve-search="true" 
                             placeholder="Choisissez un ou des tags existants">
                         <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
                     </vue-multiselect>
-                    <input v-model="nouveauxTags" placeholder="Ex: tag 1, tag 2">
+                    <input v-model="formRecette.nouveauxTags" placeholder="Ex: tag 1, tag 2">
                 </div>
             </div>
             <div><span class="nomChamp">Fichier Image</span><div class="champ"><input type="file" multiple v-on:change="enregistrePathImage" ref="fichierImageInput" accept="image/*"></div></div>
-            <div><span class="nomChamp">Nombre de portion</span><div class="champ"><inputNumber v-model="nbPortions" min="1"></inputNumber></div></div>
-            <div><span class="nomChamp">Définition de portion</span><div class="champ"><input v-model="defPortion" placeholder="Ex: petit pot"></div></div>
-            <div><span class="nomChamp">Temp de cuisson (en min)</span><div class="champ"><input type="number" v-model="tempsCuissonMin"></div></div>
-            <div><span class="nomChamp">Temp de préparation (en min)</span><div class="champ"><input type="number" v-model="tempsPreparationMin"></div></div>
-            <div><span class="nomChamp">Temp d'attente (en min)</span><div class="champ"><input type="number" v-model="tempsAttenteMin"></div></div>
+            <div><span class="nomChamp">Nombre de portion</span><div class="champ"><inputNumber v-model="formRecette.nbPortions" min="1"></inputNumber></div></div>
+            <div><span class="nomChamp">Définition de portion</span><div class="champ"><input v-model="formRecette.defPortion" placeholder="Ex: petit pot"></div></div>
+            <div><span class="nomChamp">Temp de cuisson (en min)</span><div class="champ"><input type="number" v-model="formRecette.tempsCuissonMin"></div></div>
+            <div><span class="nomChamp">Temp de préparation (en min)</span><div class="champ"><input type="number" v-model="formRecette.tempsPreparationMin"></div></div>
+            <div><span class="nomChamp">Temp d'attente (en min)</span><div class="champ"><input type="number" v-model="formRecette.tempsAttenteMin"></div></div>
             
-            <div><span class="nomChamp">Kcal (pour la quantité total)</span><div class="champ"><input type="number" v-model="kcal"></div></div>
-            <div><span class="nomChamp">Glucides (en g, pour la quantité total)</span><div class="champ"><input type="number" v-model="glucides"></div></div>
-            <div><span class="nomChamp">Lipides (en g, pour la quantité total)</span><div class="champ"><input type="number" v-model="lipides"></div></div>
-            <div><span class="nomChamp">Proteines (en g, pour la quantité total)</span><div class="champ"><input type="number" v-model="proteines"></div></div>
+            <div><span class="nomChamp">Kcal (pour la quantité total)</span><div class="champ"><input type="number" v-model="formRecette.kcal"></div></div>
+            <div><span class="nomChamp">Glucides (en g, pour la quantité total)</span><div class="champ"><input type="number" v-model="formRecette.glucides"></div></div>
+            <div><span class="nomChamp">Lipides (en g, pour la quantité total)</span><div class="champ"><input type="number" v-model="formRecette.lipides"></div></div>
+            <div><span class="nomChamp">Proteines (en g, pour la quantité total)</span><div class="champ"><input type="number" v-model="formRecette.proteines"></div></div>
             
-            <div><span class="nomChamp">Ingrédients</span><div class="champ"><TextareaAutosize v-model="ingredients" placeholder="Ex: Petit pain 3 cuillères à soupe (ingrédient quantité unité (note))"/></div></div>
-            <div><span class="nomChamp">Ustensiles</span><div class="champ"><TextareaAutosize v-model="ustensiles" placeholder="Ex: Grand saladier 1 (inox ou verre)"/></div></div>
-            <div><span class="nomChamp">Etapes</span><div class="champ"><TextareaAutosize v-model="etapes"/></div></div>
-            <div><span class="nomChamp">Variantes</span><div class="champ"><TextareaAutosize v-model="variantes"/></div></div>
-            <div><span class="nomChamp">Remarques</span><div class="champ"><TextareaAutosize v-model="remarques"/></div></div>
-            <div><span class="nomChamp">Inspirations</span><div class="champ"><TextareaAutosize v-model="inspirations" placeholder="Ex: [nom](url) note"/></div></div>
+            <div><span class="nomChamp">Ingrédients</span><div class="champ"><TextareaAutosize v-model="formRecette.ingredients" placeholder="Ex: Petit pain 3 cuillères à soupe (ingrédient quantité unité (note))"/></div></div>
+            <div><span class="nomChamp">Ustensiles</span><div class="champ"><TextareaAutosize v-model="formRecette.ustensiles" placeholder="Ex: Grand saladier 1 (inox ou verre)"/></div></div>
+            <div><span class="nomChamp">Etapes</span><div class="champ"><TextareaAutosize v-model="formRecette.etapes"/></div></div>
+            <div><span class="nomChamp">Variantes</span><div class="champ"><TextareaAutosize v-model="formRecette.variantes"/></div></div>
+            <div><span class="nomChamp">Remarques</span><div class="champ"><TextareaAutosize v-model="formRecette.remarques"/></div></div>
+            <div><span class="nomChamp">Inspirations</span><div class="champ"><TextareaAutosize v-model="formRecette.inspirations" placeholder="Ex: [nom](url) note"/></div></div>
         </div>
         <div id="affichage"  v-if="estConnecte">
             <div id="boutons">
@@ -89,40 +89,51 @@ let admin = {
         let date = new Date();
 
         let recetteAModifier = STORE.recetteAModifier
+        let recetteCache = window.localStorage.getItem('recetteEnCours') ? JSON.parse(window.localStorage.getItem('recetteEnCours')) : {}
 
 		return {
             recettes: RECETTES,
-            domaineRecette : recetteAModifier ? recetteAModifier.domaine : "",
             mapCategoriesParDomaine: CATEGORIES,
-            categories: recetteAModifier ? this.retrieveCategories(recetteAModifier) : [],
-            sousCategories: recetteAModifier ? this.retrieveSousCategories(recetteAModifier) : [],
-            refImages : [],
-            ancienneRefImages : recetteAModifier ? this.retrieveRefImages(recetteAModifier) : [],
-            nbPortions: recetteAModifier ? recetteAModifier.nbPortions : 1,
-            defPortion: recetteAModifier ? recetteAModifier.defPortion : "",
-            tempsCuissonMin: recetteAModifier ? (recetteAModifier.tempsCuissonMin ? recetteAModifier.tempsCuissonMin : null) : null,
-            tempsPreparationMin: recetteAModifier ? (recetteAModifier.tempsPreparationMin ? recetteAModifier.tempsPreparationMin : null) : null,
-            tempsAttenteMin: recetteAModifier ? (recetteAModifier.tempsAttenteMin ? recetteAModifier.tempsAttenteMin : null) : null,
-            kcal: recetteAModifier ? this.retrieveKcal(recetteAModifier) : null,
-            glucides: recetteAModifier ? this.retrieveGlucides(recetteAModifier) : null,
-            lipides: recetteAModifier ? this.retrieveLipides(recetteAModifier) : null,
-            proteines: recetteAModifier ? this.retrieveProteines(recetteAModifier) : null,
-            ingredients: recetteAModifier ? this.retrieveIngredients(recetteAModifier) : "",
-            ustensiles: recetteAModifier ? this.retrieveUstensiles(recetteAModifier) : "",
-            etapes: recetteAModifier ? this.retrieveEtapes(recetteAModifier) : "",
-            variantes: recetteAModifier ? this.retrieveVariantes(recetteAModifier) : "",
-            remarques: recetteAModifier ? this.retrieveRemarques(recetteAModifier) : "",
-            inspirations: recetteAModifier ? this.retrieveInspirations(recetteAModifier) : "",
-            nom : recetteAModifier ? recetteAModifier.nom : "",
+            formRecette: {
+                domaineRecette : recetteAModifier ? recetteAModifier.domaine : (recetteCache.domaineRecette || ""),
+                categories: recetteAModifier ? this.retrieveCategories(recetteAModifier) : (recetteCache.categories || []),
+                sousCategories: recetteAModifier ? this.retrieveSousCategories(recetteAModifier) : (recetteCache.sousCategories || []),
+                ancienneRefImages : recetteAModifier ? this.retrieveRefImages(recetteAModifier) : [],
+                refImages : [],
+                nbPortions: recetteAModifier ? recetteAModifier.nbPortions : (recetteCache.nbPortions || 1),
+                defPortion: recetteAModifier ? recetteAModifier.defPortion : (recetteCache.defPortion || ""),
+                tempsCuissonMin: recetteAModifier ? (recetteAModifier.tempsCuissonMin ? recetteAModifier.tempsCuissonMin : null) : (recetteCache.tempsCuissonMin || null),
+                tempsPreparationMin: recetteAModifier ? (recetteAModifier.tempsPreparationMin ? recetteAModifier.tempsPreparationMin : null) : (recetteCache.tempsPreparationMin || null),
+                tempsAttenteMin: recetteAModifier ? (recetteAModifier.tempsAttenteMin ? recetteAModifier.tempsAttenteMin : null) : (recetteCache.tempsAttenteMin || null),
+                kcal: recetteAModifier ? this.retrieveKcal(recetteAModifier) : (recetteCache.kcal || null),
+                glucides: recetteAModifier ? this.retrieveGlucides(recetteAModifier) : (recetteCache.glucides || null),
+                lipides: recetteAModifier ? this.retrieveLipides(recetteAModifier) : (recetteCache.lipides || null),
+                proteines: recetteAModifier ? this.retrieveProteines(recetteAModifier) : (recetteCache.proteines || null),
+                ingredients: recetteAModifier ? this.retrieveIngredients(recetteAModifier) : (recetteCache.ingredients || ""),
+                ustensiles: recetteAModifier ? this.retrieveUstensiles(recetteAModifier) : (recetteCache.ustensiles || ""),
+                etapes: recetteAModifier ? this.retrieveEtapes(recetteAModifier) : (recetteCache.etapes || ""),
+                variantes: recetteAModifier ? this.retrieveVariantes(recetteAModifier) : (recetteCache.variantes || ""),
+                remarques: recetteAModifier ? this.retrieveRemarques(recetteAModifier) : (recetteCache.remarques || ""),
+                inspirations: recetteAModifier ? this.retrieveInspirations(recetteAModifier) : (recetteCache.inspirations || ""),
+                nom : recetteAModifier ? recetteAModifier.nom : (recetteCache.nom || ""),
+                tagsRecette: recetteAModifier ? this.retrieveTags(recetteAModifier) : (recetteCache.tagsRecette || null),
+                nouveauxTags: (recetteCache.nouveauxTags || ""),
+                date: recetteAModifier ? recetteAModifier.dateAjout : (recetteCache.date || `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`),
+            },
             domaines,
-            tagsRecette: recetteAModifier ? this.retrieveTags(recetteAModifier) : null,
-            nouveauxTags: "",
-            date: recetteAModifier ? recetteAModifier.dateAjout : `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`,
             connexionMail: null,
             connexionMdp: null,
             connexionErreurs: null,
             store:STORE
 		}
+    },
+    watch: {
+        formRecette: {
+            handler(newVal) {
+                if (!this.recetteAModifier) window.localStorage.setItem('recetteEnCours', JSON.stringify(newVal));
+            },
+            deep: true
+        }
     },
     computed: {
         estConnecte() {
@@ -134,35 +145,35 @@ let admin = {
             return [...tags].sort();
         },
         categoriesDuDomaine() {
-            return this.mapCategoriesParDomaine[this.domaineRecette] || [];
+            return this.mapCategoriesParDomaine[this.formRecette.domaineRecette] || [];
         },
         recette() {
             let apportNutritionelTotal = [];
-            if (this.kcal) apportNutritionelTotal.push({type: "kcal", quantite: this.kcal});
-            if (this.glucides) apportNutritionelTotal.push({type: "glucides", quantite: this.glucides, unite: "g"});
-            if (this.proteines) apportNutritionelTotal.push({type: "proteines", quantite: this.proteines, unite: "g"});
-            if (this.lipides) apportNutritionelTotal.push({type: "lipides", quantite: this.lipides, unite: "g"});
-            let nouveauxTagsSplit = this.nouveauxTags.split(', ').filter(e => e)
+            if (this.formRecette.kcal) apportNutritionelTotal.push({type: "kcal", quantite: this.formRecette.kcal});
+            if (this.formRecette.glucides) apportNutritionelTotal.push({type: "glucides", quantite: this.formRecette.glucides, unite: "g"});
+            if (this.formRecette.proteines) apportNutritionelTotal.push({type: "proteines", quantite: this.formRecette.proteines, unite: "g"});
+            if (this.formRecette.lipides) apportNutritionelTotal.push({type: "lipides", quantite: this.formRecette.lipides, unite: "g"});
+            let nouveauxTagsSplit = this.formRecette.nouveauxTags.split(', ').filter(e => e)
             return {
-                domaine : this.domaineRecette,
-                nom : this.nom,
-                dateAjout : this.date,
-                categories : this.categories.map(c => c.id),
-                sousCategories : this.sousCategories.map(c => c.id),
-                refImages: this.refImages.concat(this.ancienneRefImages).sort(),
-                tags: [...(this.tagsRecette||[]), ...nouveauxTagsSplit],
-                nbPortions: this.nbPortions,
-                defPortion: this.defPortion,
-                tempsPreparationMin : this.tempsPreparationMin,
-                tempsAttenteMin : this.tempsAttenteMin,
-                tempsCuissonMin : this.tempsCuissonMin,
+                domaine : this.formRecette.domaineRecette,
+                nom : this.formRecette.nom,
+                dateAjout : this.formRecette.date,
+                categories : this.formRecette.categories.map(c => c.id),
+                sousCategories : this.formRecette.sousCategories.map(c => c.id),
+                refImages: this.formRecette.refImages.concat(this.formRecette.ancienneRefImages).sort(),
+                tags: [...(this.formRecette.tagsRecette||[]), ...nouveauxTagsSplit],
+                nbPortions: this.formRecette.nbPortions,
+                defPortion: this.formRecette.defPortion,
+                tempsPreparationMin : this.formRecette.tempsPreparationMin,
+                tempsAttenteMin : this.formRecette.tempsAttenteMin,
+                tempsCuissonMin : this.formRecette.tempsCuissonMin,
                 apportNutritionelTotal: apportNutritionelTotal,
-                ingredients:  this.extraireTableauxDesChamps(this.ingredients, this.extraireIngredient),
-                ustensiles: this.extraireTableauxDesChamps(this.ustensiles, this.extraireUstensile),
-                etapes : this.extraireTableauxDesChamps(this.etapes),
-                variantes : this.extraireTableauxDesChamps(this.variantes),
-                remarques : this.extraireTableauxDesChamps(this.remarques),
-                inspirations : this.extraireTableauxDesChamps(this.inspirations, this.extraireInspiration)
+                ingredients:  this.extraireTableauxDesChamps(this.formRecette.ingredients, this.extraireIngredient),
+                ustensiles: this.extraireTableauxDesChamps(this.formRecette.ustensiles, this.extraireUstensile),
+                etapes : this.extraireTableauxDesChamps(this.formRecette.etapes),
+                variantes : this.extraireTableauxDesChamps(this.formRecette.variantes),
+                remarques : this.extraireTableauxDesChamps(this.formRecette.remarques),
+                inspirations : this.extraireTableauxDesChamps(this.formRecette.inspirations, this.extraireInspiration)
             }
         },
         resultat(){
@@ -263,9 +274,9 @@ let admin = {
                 firebase.database().ref('recettes').push().set(this.recette)  
             }
             
-            let domaineToGo = this.domaineRecette;
-            let categorieToGo = this.categories[0].nom;
-            let recetteToGo = this.nom;
+            let domaineToGo = this.formRecette.domaineRecette;
+            let categorieToGo = this.formRecette.categories[0].nom;
+            let recetteToGo = this.formRecette.nom;
 
             this.reinit()
 
@@ -277,36 +288,38 @@ let admin = {
         },
         reinit() {
             let date = new Date();
-            this.domaineRecette = "";
-            this.categories= [];
-            this.sousCategories= [];
-            this.ancienneRefImages= [];
-            this.refImages= [];
-            this.nbPortions= 1;
-            this.defPortion= "";
-            this.tempsCuissonMin= null;
-            this.tempsPreparationMin= null;
-            this.tempsAttenteMin= null;
-            this.kcal= null;
-            this.glucides= null;
-            this.lipides= null;
-            this.proteines= null;
-            this.ingredients= "";
-            this.ustensiles= "";
-            this.etapes= "";
-            this.variantes= "";
-            this.remarques= "";
-            this.inspirations= "";
-            this.nom = "";
-            this.tagsRecette= null;
-            this.nouveauxTags="";
-            this.date= `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
+            this.formRecette.domaineRecette = "";
+            this.formRecette.categories= [];
+            this.formRecette.sousCategories= [];
+            this.formRecette.ancienneRefImages= [];
+            this.formRecette.refImages= [];
+            this.formRecette.nbPortions= 1;
+            this.formRecette.defPortion= "";
+            this.formRecette.tempsCuissonMin= null;
+            this.formRecette.tempsPreparationMin= null;
+            this.formRecette.tempsAttenteMin= null;
+            this.formRecette.kcal= null;
+            this.formRecette.glucides= null;
+            this.formRecette.lipides= null;
+            this.formRecette.proteines= null;
+            this.formRecette.ingredients= "";
+            this.formRecette.ustensiles= "";
+            this.formRecette.etapes= "";
+            this.formRecette.variantes= "";
+            this.formRecette.remarques= "";
+            this.formRecette.inspirations= "";
+            this.formRecette.nom = "";
+            this.formRecette.tagsRecette= null;
+            this.formRecette.nouveauxTags="";
+            this.formRecette.date= `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
+
+            window.localStorage.removeItem('recetteEnCours')
         },
         retrieveCategories(recetteAModifier) {            
             return recetteAModifier.categories? CATEGORIES[recetteAModifier.domaine].filter(c => recetteAModifier.categories.includes(c.id)) : []
         },
         retrieveSousCategories(recetteAModifier) {            
-            return recetteAModifier.sousCategories? CATEGORIES[recetteAModifier.domaine].filter(c => recetteAModifier.categories.includes(c.id)).flatMap(c => c.sousCategories).filter(sc => recetteAModifier.sousCategories.includes(sc.id)) : []
+            return recetteAModifier.sousCategories? CATEGORIES[recetteAModifier.domaine].filter(c => recetteAModifier.categories.includes(c.id)).flatMap(c => c.sousCategories || []).filter(sc => recetteAModifier.sousCategories.includes(sc.id)) : []
         },
         retrieveRefImages(recetteAModifier) {
             return recetteAModifier.refImages || [];
@@ -399,80 +412,10 @@ let admin = {
             return recetteAModifier.apportNutritionelTotal.find(a => a.type === "proteines")?.quantite;
         },
         async enregistreImage() {
-
-            // Create a root reference
-            var storageRef = firebase.storage().ref();
-
-            // Create the file metadata
-            var metadata = {
-                contentType: 'image/jpg'
-            };
-
-            await Promise.all([...this.$refs.fichierImageInput.files].map(async (fichier, i) => {
-
-                let imageRedimensionnee = await this.redimensionnerImage(fichier, i)
-
-                let uploadTask = storageRef
-                    .child(this.generateRefImage(imageRedimensionnee, i))
-                    .put(imageRedimensionnee, metadata)
-                uploadTask.on(
-                        firebase.storage.TaskEvent.STATE_CHANGED,
-                        (snapshot) => {}, 
-                        (error) => { console.log(error) }, 
-                        () => {
-                            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                                console.log('File available at', downloadURL);
-                            });
-                        }
-                    );
-            }))
-
+            await ADMIN_UTILS.enregistreImage(this.$refs.fichierImageInput, this.formRecette.nom, this.formRecette.ancienneRefImages.length, this.formRecette.domaineRecette);
         },
         enregistrePathImage() {
-            this.refImages.length = 0;
-            [...this.$refs.fichierImageInput.files].forEach((fichier, i) => {
-                this.refImages.push(this.generateRefImage(fichier, i))
-            })
-        },
-        generateRefImage(fichier, i) {
-            let nomFichier = this.generateNomImage(i)
-            //let extension = fichier.name.substring(fichier.name.lastIndexOf('.') + 1)
-            return  `images/${this.domaineRecette}/${nomFichier}.jpg`
-        },
-        generateNomImage(i) {
-            // Formate le nom du fichier : nom de la recette en minuscule et sans accents, avec les espaces remplacés par des underscore
-            let nomFichier = this.nom.toLowerCase().replaceAll(" ", "_").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-            return  `${nomFichier}_${i+this.ancienneRefImages.length}`
-        },
-        redimensionnerImage(fichierImage, i) {
-			return new Promise((resolve, reject) => {
-				let reader = new FileReader();
-				let canvas = document.createElement('canvas');
-
-
-
-				reader.onload = _ => {
-					let image = new Image();
-					image.onload = _ => {
-                        let r = 400 / Math.max(image.width, image.height) // 400 taille max image (hauteur et longueur)
-                        let newWidth = image.width * r
-                        let newHeight = image.height * r
-                        canvas.width = newWidth;
-                        canvas.height = newHeight;
-
-						canvas.getContext('2d').drawImage(image, 0, 0, newWidth, newHeight);
-						var dataUrl = canvas.toDataURL('image/jpg');
-						fetch(dataUrl)
-							.then(res => res.blob())
-							.then(blob => {
-								let returnFile = new File([blob], this.generateNomImage(i), {type: 'image/jpg'});
-								resolve(returnFile);
-							})
-					}
-					image.src = reader.result;
-				}
-				reader.readAsDataURL(fichierImage);
-			});
-		}
+            ADMIN_UTILS.enregistrePathImage(this.$refs.fichierImageInput, this.formRecette.refImages, this.formRecette.nom, this.formRecette.ancienneRefImages.length, this.formRecette.domaineRecette);
+        }
     }
 }

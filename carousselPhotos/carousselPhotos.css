@@ -25,6 +25,8 @@
     align-self: stretch;
     background-size: cover;
     background-position: center;
+    /*background-size: contain;
+    background-repeat: no-repeat;*/
     margin-top: 2vh;
     border-radius: 20px;
 }

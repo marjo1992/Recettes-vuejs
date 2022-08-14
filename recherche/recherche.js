@@ -56,7 +56,7 @@ let recherche = {
 		getRecettesByTags(domaine) {
 			return this.recettes
 			.filter(r => r.domaine === domaine)
-			.filter(r => r.tags.find(t => t === this.$route.params.tag));
+			.filter(r => (r.tags || []).find(t => t === this.$route.params.tag));
 		}
 	}
 }

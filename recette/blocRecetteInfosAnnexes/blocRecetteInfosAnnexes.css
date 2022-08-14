@@ -75,7 +75,7 @@
     align-items: center;
 }
 
-blocApportsNutritionels .apportType {
+#blocApportsNutritionels .apportType {
     font-weight: bold;
 }
 

@@ -1,3 +1,0 @@
-function chargerArticles() {
-    return articles;
-}

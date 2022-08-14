@@ -8,6 +8,7 @@ const router = new VueRouter({
 	routes: [
 		{path: '/', component: accueil, name:"accueil"},
 		{path: '/admin', component: admin, name:"admin"},
+		{path: '/adminArticle', component: adminArticle, name:"adminArticle"},
 		{path: '/recherche/:tag', component: recherche, name:"recherche"},
 		{path: '/Articles/:article', component: article, name:"article"},
 		{path: '/:domaine', component: domaine, name:"domaine"},
@@ -32,10 +33,12 @@ firebase.initializeApp(firebaseConfig);
 
 let RECETTES = [];
 let CATEGORIES = {};
+let ARTICLES = [];
 
 let STORE = {
 	estConnecte : false,
-	recetteAModifier : null
+	recetteAModifier : null,
+	articleAModifier : null
 };
 
 const storageRef = firebase.storage().ref();
@@ -64,6 +67,26 @@ firebase.database().ref('categories').on('value', res => {
 	Object.keys(val).forEach(k => {
 		Vue.set(CATEGORIES, k, val[k]);
 	});
+});
+
+firebase.database().ref('articles').on('value', async res => {
+	ARTICLES.length = 0;
+	for (key in res.val()) {
+		let article = res.val()[key];
+		article.uuid = key;
+		if (article.refImages) {
+			article.urlsImagesStock = []
+			for (refImage of article.refImages) {
+				try {
+					let url = await storageRef.child(refImage).getDownloadURL()
+					article.urlsImagesStock.push(url)
+				} catch (e) {
+					console.log()
+				}
+			}
+		}
+		ARTICLES.push(article);
+	}
 });
 
 firebase.auth().onAuthStateChanged(function(user) {

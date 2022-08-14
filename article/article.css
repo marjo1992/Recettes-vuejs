@@ -11,6 +11,11 @@
     letter-spacing: 0.7px;
 }
 
+#article #iconeModifier {
+    margin-left: 1.5vw;
+    cursor: pointer;
+}
+
 #article ::selection {
     background: var(--colorOrangeLight);
 }
@@ -66,6 +71,10 @@
 
 #article #blocTextArticle p:nth-of-type(2n) img {
     float: right;
+}
+
+#article .listeObject {
+    align-items: flex-start;
 }
 
 #article #blocTextArticle p {

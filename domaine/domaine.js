@@ -17,7 +17,8 @@ let domaine = {
     </div>`,
     data() {
         return {
-            categoriesFirebase: CATEGORIES
+            categoriesFirebase: CATEGORIES,
+            articlesFirebase: ARTICLES
         }
     },
     computed: {
@@ -25,7 +26,7 @@ let domaine = {
             return this.$route.params.domaine === "Articles"
         },
         articles() {
-            return chargerArticles()
+            return this.articlesFirebase
         },
         categories() {
             return this.categoriesFirebase[this.$route.params.domaine] || []

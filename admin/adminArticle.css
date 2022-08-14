@@ -1,0 +1,143 @@
+@media(max-width: 600px) {
+        
+    #adminArticle {
+        flex-direction: column;
+        padding: 4vh;
+        font-size: 1.33em;
+    }
+
+    #adminArticle #affichage {
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+    
+    #adminArticle .formulaire {
+        border-top-right-radius: 20px;
+        border-top-left-radius: 20px;
+    }
+    
+    #adminArticle .formulaire>div {
+        flex-direction: column;
+        align-items: center;
+        padding: 1vh;
+    }
+}
+
+@media(min-width: 601px) {
+
+    #adminArticle {
+        flex-direction: row;
+        padding: 4vh 2vw;
+    }
+
+    #adminArticle #affichage {
+        overflow-y: auto;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+    
+    #adminArticle .formulaire {
+        overflow-y: auto;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+    
+    #adminArticle .formulaire>div {
+        flex-direction: row;
+    }
+}
+
+:root {
+    --contentadminArticleHeight: calc(92vh - var(--navbarHeight));
+}
+
+#adminArticle {
+    display:flex;
+    height: var(--contentadminArticleHeight);
+    overflow-y: auto;
+}
+
+#adminArticle .formulaire {
+    background-color: var(--colorOrangeLight);
+    display:flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: 1vh 1vw;
+    justify-content: space-around;
+}
+
+#adminArticle .formulaire ::selection {
+    background: teal;
+}
+
+#adminArticle #affichage {
+    flex-grow: 1;
+    flex-basis: 0;
+    background-color: darkslategray;
+    color: var(--colorTitle);
+    padding: 2vh 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#adminArticle #boutons {
+    display: flex;
+    justify-content: space-between;
+}
+
+#adminArticle .bouton {
+    background-color: teal;
+    padding: 0.25vh 1vw;
+    border-radius: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    cursor: pointer;
+}
+
+#adminArticle .formulaire>div {
+    display:flex;
+    margin-top: 0.5vh;
+}
+#adminArticle .formulaire .champ {
+    flex-grow: 5;
+    flex-basis: 0;
+}
+#adminArticle .formulaire .nomChamp {
+    display:flex;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-basis: 0;
+    align-items: center;
+}
+
+#adminArticle input, #adminArticle textarea, #adminArticle select {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: 0.75px;
+    border: 1px solid #e8e8e8;
+	border-radius: 5px;
+    background: #fff;
+    padding: 0;
+}
+
+#adminArticle input:focus, #adminArticle textarea:focus, #adminArticle select:focus {
+	outline: none;
+}
+
+#adminArticle #article {
+    background-color: white;
+    height: 85%;
+}
+
+#inputTexteArticle {
+    height: 60%;
+}
+
+textarea { resize: none; }
